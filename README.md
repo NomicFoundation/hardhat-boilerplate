@@ -16,6 +16,7 @@ On a new terminal, go to this repository root folder and run:
 ```
 npx buidler run scripts/deploy-frontend.js --network localhost
 cd frontend
+npm install
 npm start
 ```
 
