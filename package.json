@@ -29,6 +29,7 @@
     "@nomiclabs/buidler-waffle": "^1.2.0",
     "chai": "^4.2.0",
     "ethereum-waffle": "^2.4.1",
-    "ethers": "^4.0.46"
+    "ethers": "^4.0.46",
+    "husky": "^4.2.5"
   }
 }
