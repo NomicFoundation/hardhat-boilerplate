@@ -363,5 +363,7 @@ export class Dapp extends React.Component {
     this.setState({ 
       networkError: 'Please connect Metamask to Localhost:8545'
     });
+
+    return false;
   }
 }
