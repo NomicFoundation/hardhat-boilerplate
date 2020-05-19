@@ -19,11 +19,6 @@ import { TransactionErrorMessage } from "./TransactionErrorMessage";
 import { WaitingForTransactionMessage } from "./WaitingForTransactionMessage";
 import { NoTokensMessage } from "./NoTokensMessage";
 
-// This is the Buidler EVM network id, you might change it in the buidler.config.js
-// Here's a list of network ids https://docs.metamask.io/guide/ethereum-provider.html#properties
-// to use when deploying to other networks.
-const BUIDLER_EVM_NETWORK_ID = '31337';
-
 // This is an error code that indicates that the user canceled a transaction
 const ERROR_CODE_TX_REJECTED_BY_USER = 4001;
 
@@ -72,7 +67,9 @@ export class Dapp extends React.Component {
     //
     // Note that we pass it a callback that is going to be called when the user
     // clicks a button. This callback just calls the _connectWallet method.
-    if (!this.state.selectedAddress) {
+    //
+    // Also note that we show the ConnectWallet component if a network error occurs.
+    if (!this.state.selectedAddress || this.state.networkError) {
       return (
         <ConnectWallet 
           connectWallet={() => this._connectWallet()} 
@@ -176,12 +173,6 @@ export class Dapp extends React.Component {
     const [selectedAddress] = await window.ethereum.enable();
 
     // Once we have the address, we can initialize the application.
-
-    // First we check the network
-    if (!this._checkNetwork()) {
-      return;
-    }
-
     this._initialize(selectedAddress);
 
     // We reinitialize it whenever the user changes their account.
@@ -205,9 +196,8 @@ export class Dapp extends React.Component {
     });
   }
 
-  _initialize(userAddress) {
+  async _initialize(userAddress) {
     // This method initializes the dapp
-
     // We first store the user's address in the component's state
     this.setState({
       selectedAddress: userAddress,
@@ -215,21 +205,26 @@ export class Dapp extends React.Component {
 
     // Then, we initialize ethers, fetch the token's data, and start polling
     // for the user's balance.
-
     // Fetching the token data and the user's balance are specific to this
     // sample project, but you can reuse the same initialization pattern.
-    this._intializeEthers();
-    this._getTokenData();
-    this._startPollingData();
+    // We use await here because the contract might not be deployed
+    await this._intializeEthers();
+    try {
+      await this._token.deployed();
+      this._startPollingData();
+      this._getTokenData();
+    } catch (error) {
+      this.setState({ networkError: 'Token contract not found on this network.' });
+    }
   }
 
   async _intializeEthers() {
     // We first initialize ethers by creating a provider using window.ethereum
     this._provider = new ethers.providers.Web3Provider(window.ethereum);
 
-    // When, we initialize the contract using that provider and the token's
-    // artifact. You can do this same thing with your contracts.
-    this._token = new ethers.Contract(
+    // We initialize the contract using the provider and the token's
+    // artifact and address. You can do this same thing with your contracts.
+    this._token = await new ethers.Contract(
       contractAddress.Token,
       TokenArtifact.abi,
       this._provider.getSigner(0)
@@ -352,18 +347,5 @@ export class Dapp extends React.Component {
   // This method resets the state
   _resetState() {
     this.setState(this.initialState);
-  }
-
-  // This method checks if Metamask selected network is Localhost:8545 
-  _checkNetwork() {
-    if (window.ethereum.networkVersion === BUIDLER_EVM_NETWORK_ID) {
-      return true;
-    }
-
-    this.setState({ 
-      networkError: 'Please connect Metamask to Localhost:8545'
-    });
-
-    return false;
   }
 }
