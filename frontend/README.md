@@ -32,8 +32,8 @@ this project, and what can be reused.
 ## Feedback, help and news
 
 Feel free to reach us through this repository or
-[our Telegram Support Group](https://t.me/BuidlerSupport).
+[our Discord server](https://invite.gg/HardhatSupport).
 
-Also you can [follow Nomic Labs on Twitter](https://twitter.com/nomiclabs).
+Also you can [follow us on Twitter](https://twitter.com/HardhatHQ).
 
 **Happy _buidling_!**

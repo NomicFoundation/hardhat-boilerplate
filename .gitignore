@@ -1,7 +1,6 @@
 node_modules
 .idea
 
-#Buidler files
+#Hardhat files
 cache
 artifacts
-

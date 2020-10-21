@@ -2,10 +2,10 @@
 // yours, or create new ones.
 async function main() {
   // This is just a convenience check
-  if (network.name === "buidlerevm") {
+  if (network.name === "hardhat") {
     console.warn(
-      "You are trying to deploy a contract to the Buidler EVM network, which" +
-        "gets automatically created and destroyed every time. Use the Buidler" +
+      "You are trying to deploy a contract to the Hardhat Network, which" +
+        "gets automatically created and destroyed every time. Use the Hardhat" +
         " option '--network localhost'"
     );
   }
@@ -42,9 +42,11 @@ function saveFrontendFiles(token) {
     JSON.stringify({ Token: token.address }, undefined, 2)
   );
 
-  fs.copyFileSync(
-    __dirname + "/../artifacts/Token.json",
-    contractsDir + "/Token.json"
+  const TokenArtifact = artifacts.readArtifactSync("Token");
+
+  fs.writeFileSync(
+    contractsDir + "/Token.json",
+    JSON.stringify(TokenArtifact, null, 2)
   );
 }
 

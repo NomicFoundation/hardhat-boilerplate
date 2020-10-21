@@ -19,10 +19,10 @@ import { TransactionErrorMessage } from "./TransactionErrorMessage";
 import { WaitingForTransactionMessage } from "./WaitingForTransactionMessage";
 import { NoTokensMessage } from "./NoTokensMessage";
 
-// This is the Buidler EVM network id, you might change it in the buidler.config.js
+// This is the Hardhat Network id, you might change it in the hardhat.config.js
 // Here's a list of network ids https://docs.metamask.io/guide/ethereum-provider.html#properties
 // to use when deploying to other networks.
-const BUIDLER_EVM_NETWORK_ID = '31337';
+const HARDHAT_NETWORK_ID = '31337';
 
 // This is an error code that indicates that the user canceled a transaction
 const ERROR_CODE_TX_REJECTED_BY_USER = 4001;
@@ -278,7 +278,7 @@ export class Dapp extends React.Component {
     //   - It can fail before reaching the ethereum network (i.e. if the user
     //     doesn't have ETH for paying for the tx's gas)
     //   - It has to be mined, so it isn't immediately confirmed.
-    //     Note that some testing networks, like Buidler EVM, do mine
+    //     Note that some testing networks, like Hardhat Network, do mine
     //     transactions immediately, but your dapp should be prepared for
     //     other networks.
     //   - It can fail once mined.
@@ -356,7 +356,7 @@ export class Dapp extends React.Component {
 
   // This method checks if Metamask selected network is Localhost:8545 
   _checkNetwork() {
-    if (window.ethereum.networkVersion === BUIDLER_EVM_NETWORK_ID) {
+    if (window.ethereum.networkVersion === HARDHAT_NETWORK_ID) {
       return true;
     }
 
