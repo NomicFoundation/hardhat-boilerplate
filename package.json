@@ -1,35 +1,35 @@
 {
-  "name": "buidler-hackathon-boilerplate",
+  "name": "hardhat-hackathon-boilerplate",
   "version": "1.0.0",
-  "description": "A boilerplate repository to get you started with Buidler and Ethereum development",
+  "description": "A boilerplate repository to get you started with Hardhat and Ethereum development",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "npx buidler test"
+    "test": "hardhat test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nomiclabs/buidler-hackathon-boilerplate.git"
+    "url": "git+https://github.com/nomiclabs/hardhat-hackathon-boilerplate.git"
   },
   "keywords": [
-    "buidler",
+    "hardhat",
     "ethereum",
     "hackathon"
   ],
   "author": "Nomic Labs",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nomiclabs/buidler-hackathon-boilerplate/issues"
+    "url": "https://github.com/nomiclabs/hardhat-hackathon-boilerplate/issues"
   },
-  "homepage": "https://github.com/nomiclabs/buidler-hackathon-boilerplate#readme",
+  "homepage": "https://github.com/nomiclabs/hardhat-hackathon-boilerplate#readme",
   "devDependencies": {
-    "@nomiclabs/buidler": "^1.2.0",
-    "@nomiclabs/buidler-ethers": "^1.2.0",
-    "@nomiclabs/buidler-waffle": "^1.2.0",
+    "@nomiclabs/hardhat-ethers": "^2.0.0-rc.1",
+    "@nomiclabs/hardhat-waffle": "^2.0.0-rc.1",
     "chai": "^4.2.0",
-    "ethereum-waffle": "^2.4.1",
-    "ethers": "^4.0.46",
+    "ethereum-waffle": "^3.1.1",
+    "ethers": "^5.0.0",
+    "hardhat": "^2.0.0-rc.1",
     "husky": "^4.2.5"
   }
 }
