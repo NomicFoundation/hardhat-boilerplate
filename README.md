@@ -41,6 +41,10 @@ npm install
 npm start
 ```
 
+> Note: There's [an issue in `ganache-core`](https://github.com/trufflesuite/ganache-core/issues/650) that can make the `npm install` step fail. 
+>
+> If you see `npm ERR! code ENOLOCAL`, try running `npm ci` instead of `npm install`.
+
 Open [http://localhost:3000/](http://localhost:3000/) to see your Dapp. You will
 need to have [Metamask](https://metamask.io) installed and listening to
 `localhost 8545`.
