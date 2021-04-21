@@ -1,3 +1,6 @@
+const { saveFrontendFiles } = require("./_utils");
+
+
 // This is a script for deploying your contracts. You can adapt it to deploy
 // yours, or create new ones.
 async function main() {
@@ -5,8 +8,8 @@ async function main() {
   if (network.name === "hardhat") {
     console.warn(
       "You are trying to deploy a contract to the Hardhat Network, which" +
-        "gets automatically created and destroyed every time. Use the Hardhat" +
-        " option '--network localhost'"
+      "gets automatically created and destroyed every time. Use the Hardhat" +
+      " option '--network localhost'"
     );
   }
 
@@ -16,39 +19,31 @@ async function main() {
     "Deploying the contracts with the account:",
     await deployer.getAddress()
   );
-
   console.log("Account balance:", (await deployer.getBalance()).toString());
 
+  // Deploy contracts
+  await deployToken();
+  await deployExperiments();
+}
+
+
+async function deployToken() {
   const Token = await ethers.getContractFactory("Token");
   const token = await Token.deploy();
   await token.deployed();
-
-  console.log("Token address:", token.address);
-
-  // We also save the contract's artifacts and address in the frontend directory
   saveFrontendFiles(token);
+  console.log("Token address:", token.address);
 }
 
-function saveFrontendFiles(token) {
-  const fs = require("fs");
-  const contractsDir = __dirname + "/../frontend/src/contracts";
 
-  if (!fs.existsSync(contractsDir)) {
-    fs.mkdirSync(contractsDir);
-  }
-
-  fs.writeFileSync(
-    contractsDir + "/contract-address.json",
-    JSON.stringify({ Token: token.address }, undefined, 2)
-  );
-
-  const TokenArtifact = artifacts.readArtifactSync("Token");
-
-  fs.writeFileSync(
-    contractsDir + "/Token.json",
-    JSON.stringify(TokenArtifact, null, 2)
-  );
+async function deployExperiments() {
+  const Experiments = await ethers.getContractFactory("Experiments");
+  const experiments = await Experiments.deploy();
+  await experiments.deployed();
+  saveFrontendFiles(experiments);
+  console.log("Experiments address:", experiments.address);
 }
+
 
 main()
   .then(() => process.exit(0))
