@@ -14,10 +14,31 @@ function saveFrontendFiles(contractsObj) {
     fs.mkdirSync(contractsDir);
   }
 
+  saveContractsAddresses(contractsDir, contractsObj);
+  saveContractsArtifacts(contractsDir, contractsObj);
+}
+
+function saveContractsAddresses(contractsDir, contractsObj) {
+  const addresses = {};
+  Object.keys(contractsObj).forEach((key) => { 
+    addresses[key] = contractsObj[key].address;
+  });
+  
   fs.writeFileSync(
     contractsDir + "/contracts-addresses.json",
-    JSON.stringify(contractsObj, undefined, 2)
+    JSON.stringify(addresses, undefined, 2)
   );
+}
+
+function saveContractsArtifacts(contractsDir, contractsObj) {
+  Object.keys(contractsObj).map((key) => {
+    const contractName = contractsObj[key].contractName;
+    const ContractArtifact = artifacts.readArtifactSync(contractName);
+    fs.writeFileSync(
+      `${contractsDir}/${contractName}.json`,
+      JSON.stringify(ContractArtifact, null, 2)
+    );
+  })
 }
 
 

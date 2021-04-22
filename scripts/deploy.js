@@ -23,8 +23,8 @@ async function main() {
   // Deploy all the contracts here
   const contractsObj = {
     "Token": await deployContract("Token"),
-    "CrazyExperiments": await deployExperiments("Crazy experiments"),
-    "WiseExperiments": await deployExperiments("Wise experiments"),
+    "CrazyExperiments": await deployExperiments("Experiments", "Crazy experiments"),
+    "WiseExperiments": await deployExperiments("Experiments", "Wise experiments"),
   };
 
   // Save the frontend related files
@@ -40,8 +40,11 @@ async function deployContract(contractName) {
   const Contract = await ethers.getContractFactory(contractName);
   const instance = await Contract.deploy();
   await instance.deployed();
-  console.log(contractName + " address: " + instance.address);
-  return instance;
+  console.log(`${contractName} address: ${instance.address}`);
+  return {
+    contractName,
+    address: instance.address
+  };
 }
 
 /**
@@ -49,12 +52,15 @@ async function deployContract(contractName) {
  * @param {String} name Experiment name
  * @returns Object
  */
-async function deployExperiments(name) {
-  const Experiments = await ethers.getContractFactory("Experiments");
+async function deployExperiments(contractName, name) {
+  const Experiments = await ethers.getContractFactory(contractName);
   const instance = await Experiments.deploy(name);
   await instance.deployed();
-  console.log("Experiments address:", instance.address);
-  return instance;
+  console.log(`${contractName}(${name}) address: ${instance.address}`);
+  return {
+    contractName,
+    address: instance.address
+  };
 }
 
 main()
