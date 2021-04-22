@@ -10,15 +10,22 @@ import "hardhat/console.sol";
 
 contract Experiments {
 
-  uint privateValue = 123;
-  uint public publicValue = 321;
+  address public owner;
+  string public name;
+  // uint private privateValue = 123;
+  // uint public publicValue = 321;
 
-  function getPrivateValue() public view returns (uint) {
-    return privateValue;
+  constructor(string memory _name) {
+    owner = msg.sender;
+    name = _name;
   }
 
-  function getPublicValue() public view returns (uint) {
-    return publicValue;
-  }
+  // function getPrivateValue() public view returns (uint) {
+  //   return privateValue;
+  // }
+
+  // function getPublicValue() public view returns (uint) {
+  //   return publicValue;
+  // }
 
 }

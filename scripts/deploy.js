@@ -1,6 +1,5 @@
 const { saveFrontendFiles } = require("./_utils");
 
-
 // This is a script for deploying your contracts. You can adapt it to deploy
 // yours, or create new ones.
 async function main() {
@@ -21,29 +20,42 @@ async function main() {
   );
   console.log("Account balance:", (await deployer.getBalance()).toString());
 
-  // Deploy contracts
-  await deployToken();
-  await deployExperiments();
+  // Deploy all the contracts here
+  const contractsObj = {
+    "Token": await deployContract("Token"),
+    "CrazyExperiments": await deployExperiments("Crazy experiments"),
+    "WiseExperiments": await deployExperiments("Wise experiments"),
+  };
+
+  // Save the frontend related files
+  saveFrontendFiles(contractsObj);
 }
 
-
-async function deployToken() {
-  const Token = await ethers.getContractFactory("Token");
-  const token = await Token.deploy();
-  await token.deployed();
-  saveFrontendFiles(token);
-  console.log("Token address:", token.address);
+/**
+ * Generic deploy contract
+ * @param {String} contractName 
+ * @returns Object
+ */
+async function deployContract(contractName) {
+  const Contract = await ethers.getContractFactory(contractName);
+  const instance = await Contract.deploy();
+  await instance.deployed();
+  console.log(contractName + " address: " + instance.address);
+  return instance;
 }
 
-
-async function deployExperiments() {
+/**
+ * Deploy an Experiments contract with its custom initialisers
+ * @param {String} name Experiment name
+ * @returns Object
+ */
+async function deployExperiments(name) {
   const Experiments = await ethers.getContractFactory("Experiments");
-  const experiments = await Experiments.deploy();
-  await experiments.deployed();
-  saveFrontendFiles(experiments);
-  console.log("Experiments address:", experiments.address);
+  const instance = await Experiments.deploy(name);
+  await instance.deployed();
+  console.log("Experiments address:", instance.address);
+  return instance;
 }
-
 
 main()
   .then(() => process.exit(0))
