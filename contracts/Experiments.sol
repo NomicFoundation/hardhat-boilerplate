@@ -12,20 +12,10 @@ contract Experiments {
 
   address public owner;
   string public name;
-  // uint private privateValue = 123;
-  // uint public publicValue = 321;
 
   constructor(string memory _name) {
     owner = msg.sender;
     name = _name;
   }
-
-  // function getPrivateValue() public view returns (uint) {
-  //   return privateValue;
-  // }
-
-  // function getPublicValue() public view returns (uint) {
-  //   return publicValue;
-  // }
 
 }
