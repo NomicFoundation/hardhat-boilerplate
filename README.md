@@ -17,28 +17,26 @@ dependencies:
 ```sh
 git clone https://github.com/nomiclabs/hardhat-hackathon-boilerplate.git
 cd hardhat-hackathon-boilerplate
-yarn install
+yarn install-all
 ```
 
 Once installed, let's run Hardhat's testing network:
 
 ```sh
-yarn hardhat node
+yarn chain
 ```
 
 Then, on a new terminal, go to the repository's root folder and run this to
 deploy your contract:
 
 ```sh
-yarn hardhat run scripts/deploy.js --network localhost
+yarn deploy
 ```
 
 Finally, we can run the frontend with:
 
 ```sh
-cd frontend
-yarn install
-yarn start
+yarn start-frontend
 ```
 
 > Note: There's [an issue in `ganache-core`](https://github.com/trufflesuite/ganache-core/issues/650) that can make the `npm install` step fail. 

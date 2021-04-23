@@ -6,7 +6,12 @@
     "test": "test"
   },
   "scripts": {
-    "test": "hardhat test"
+    "chain": "hardhat node",
+    "deploy": "hardhat run scripts/deploy.js --network localhost",
+    "console": "hardhat console --network localhost",
+    "test": "hardhat test",
+    "start-frontend": "cd frontend && yarn start",
+    "install-all": "yarn install && cd frontend && yarn install"
   },
   "repository": {
     "type": "git",
