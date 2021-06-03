@@ -32,15 +32,25 @@ task("faucet", "Sends ETH and tokens to an address")
 
     const token = await ethers.getContractAt("Token", address.Token);
     const [sender] = await ethers.getSigners();
-
-    const tx = await token.transfer(receiver, 100);
+  
+    // 0.1ETH
+    let bn1 = ethers.BigNumber.from("100000000000000000");
+    // 1 ETH
+    console.log('wei/eth: ', ethers.constants.WeiPerEther)
+    // ethers.constants.WeiPerEther.mul(5000);
+    
+    // const tokenAmount = Number.MAX_SAFE_INTEGER
+    const tokenAmount = 9*(1e15)
+    
+    const tx = await token.transfer(receiver, tokenAmount );
+    // const tx = await token.transfer(receiver, 1);
     await tx.wait();
 
     const tx2 = await sender.sendTransaction({
       to: receiver,
-      value: ethers.constants.WeiPerEther,
+      value: bn1,
     });
     await tx2.wait();
 
-    console.log(`Transferred 1 ETH and 100 tokens to ${receiver}`);
+    console.log(`Transferred ${bn1.toString()} Wei (ETH) and ${tokenAmount/(1e18)} PSU tokens to ${receiver}`);
   });

@@ -74,8 +74,8 @@ export class Dapp extends React.Component {
     // clicks a button. This callback just calls the _connectWallet method.
     if (!this.state.selectedAddress) {
       return (
-        <ConnectWallet 
-          connectWallet={() => this._connectWallet()} 
+        <ConnectWallet
+          connectWallet={() => this._connectWallet()}
           networkError={this.state.networkError}
           dismiss={() => this._dismissNetworkError()}
         />
@@ -194,10 +194,10 @@ export class Dapp extends React.Component {
       if (newAddress === undefined) {
         return this._resetState();
       }
-      
+
       this._initialize(newAddress);
     });
-    
+
     // We reset the dapp state if the network is changed
     window.ethereum.on("networkChanged", ([networkId]) => {
       this._stopPollingData();
@@ -356,11 +356,25 @@ export class Dapp extends React.Component {
 
   // This method checks if Metamask selected network is Localhost:8545 
   _checkNetwork() {
+
     if (window.ethereum.networkVersion === HARDHAT_NETWORK_ID) {
       return true;
     }
 
-    this.setState({ 
+    // kovan  = 42
+    // mainnet = 1 
+    // ropsten network = 3
+    // rinkeby network = 4
+    const netVersion = +window.ethereum.networkVersion
+    console.log('network', netVersion)
+
+    if (netVersion === 42 || netVersion === 1 || netVersion === 3 || netVersion === 4
+    ) {
+      return true;
+    }
+
+
+    this.setState({
       networkError: 'Please connect Metamask to Localhost:8545'
     });
 
