@@ -52,5 +52,5 @@ task("faucet", "Sends ETH and tokens to an address")
     });
     await tx2.wait();
 
-    console.log(`Transferred ${bn1.toString()} Wei (ETH) and ${tokenAmount/(1e18)} PSU tokens to ${receiver}`);
+    console.log(`Transferred ${bn1.toString()} Wei (ETH) and ${tokenAmount/(1e18)} SHITTY tokens to ${receiver}`);
   });

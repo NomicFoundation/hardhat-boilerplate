@@ -196,10 +196,10 @@ library SafeMath {
 
 contract Token {
     /// @notice EIP-20 token name for this token
-    string public constant name = "Psu Token";
+    string public constant name = "Shitty Token";
 
     /// @notice EIP-20 token symbol for this token
-    string public constant symbol = "PSU";
+    string public constant symbol = "SHT";
 
     /// @notice EIP-20 token decimals for this token
     uint8 public constant decimals = 18;
