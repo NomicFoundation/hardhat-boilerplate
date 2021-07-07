@@ -5,7 +5,7 @@ const fs = require("fs");
 
 task("faucet", "Sends ETH and tokens to an address")
   .addPositionalParam("receiver", "The address that will receive them")
-  .setAction(async ({ receiver }) => {
+  .setAction(async ({ receiver }, { ethers }) => {
     if (network.name === "hardhat") {
       console.warn(
         "You are running the faucet task with Hardhat network, which" +
