@@ -218,12 +218,12 @@ export class Dapp extends React.Component {
 
     // Fetching the token data and the user's balance are specific to this
     // sample project, but you can reuse the same initialization pattern.
-    this._intializeEthers();
+    this._initializeEthers();
     this._getTokenData();
     this._startPollingData();
   }
 
-  async _intializeEthers() {
+  async _initializeEthers() {
     // We first initialize ethers by creating a provider using window.ethereum
     this._provider = new ethers.providers.Web3Provider(window.ethereum);
 
