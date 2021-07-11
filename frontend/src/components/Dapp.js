@@ -6,6 +6,7 @@ import { ethers } from "ethers";
 // We import the contract's artifacts and address here, as we are going to be
 // using them with ethers
 import TokenArtifact from "../contracts/Token.json";
+import EBOGAgreementArtifact from "../contracts/EBOGAgreement.json";
 import contractAddress from "../contracts/contract-address.json";
 
 // All the logic of this dapp is contained in the Dapp component.
@@ -14,15 +15,16 @@ import contractAddress from "../contracts/contract-address.json";
 import { NoWalletDetected } from "./NoWalletDetected";
 import { ConnectWallet } from "./ConnectWallet";
 import { Loading } from "./Loading";
-import { Transfer } from "./Transfer";
 import { TransactionErrorMessage } from "./TransactionErrorMessage";
 import { WaitingForTransactionMessage } from "./WaitingForTransactionMessage";
-import { NoTokensMessage } from "./NoTokensMessage";
+// import { Transfer } from "./Transfer";
+// import { NoTokensMessage } from "./NoTokensMessage";
+import "../stylesheets/Dapp.css";
 
 // This is the Hardhat Network id, you might change it in the hardhat.config.js
 // Here's a list of network ids https://docs.metamask.io/guide/ethereum-provider.html#properties
 // to use when deploying to other networks.
-const HARDHAT_NETWORK_ID = '31337';
+const HARDHAT_NETWORK_ID = '1337';
 
 // This is an error code that indicates that the user canceled a transaction
 const ERROR_CODE_TX_REJECTED_BY_USER = 4001;
@@ -55,6 +57,9 @@ export class Dapp extends React.Component {
       networkError: undefined,
     };
 
+    this._optIn = this._optIn.bind(this)
+    this._optOut = this._optOut.bind(this)
+
     this.state = this.initialState;
   }
 
@@ -74,8 +79,8 @@ export class Dapp extends React.Component {
     // clicks a button. This callback just calls the _connectWallet method.
     if (!this.state.selectedAddress) {
       return (
-        <ConnectWallet 
-          connectWallet={() => this._connectWallet()} 
+        <ConnectWallet
+          connectWallet={() => this._connectWallet()}
           networkError={this.state.networkError}
           dismiss={() => this._dismissNetworkError()}
         />
@@ -92,16 +97,12 @@ export class Dapp extends React.Component {
     return (
       <div className="container p-4">
         <div className="row">
-          <div className="col-12">
+          <div className="col-10 offset-1">
             <h1>
-              {this.state.tokenData.name} ({this.state.tokenData.symbol})
+              {this.state.agreementName} ({this.state.agreementSymbol})
             </h1>
             <p>
-              Welcome <b>{this.state.selectedAddress}</b>, you have{" "}
-              <b>
-                {this.state.balance.toString()} {this.state.tokenData.symbol}
-              </b>
-              .
+              Welcome <b>{this.state.selectedAddress}</b>
             </p>
           </div>
         </div>
@@ -109,8 +110,8 @@ export class Dapp extends React.Component {
         <hr />
 
         <div className="row">
-          <div className="col-12">
-            {/* 
+          <div className="col-10 offset-1">
+            {/*
               Sending a transaction isn't an immidiate action. You have to wait
               for it to be mined.
               If we are waiting for one, we show a message here.
@@ -119,8 +120,8 @@ export class Dapp extends React.Component {
               <WaitingForTransactionMessage txHash={this.state.txBeingSent} />
             )}
 
-            {/* 
-              Sending a transaction can fail in multiple ways. 
+            {/*
+              Sending a transaction can fail in multiple ways.
               If that happened, we show a message here.
             */}
             {this.state.transactionError && (
@@ -133,28 +134,46 @@ export class Dapp extends React.Component {
         </div>
 
         <div className="row">
-          <div className="col-12">
-            {/*
-              If the user has no tokens, we don't show the Tranfer form
-            */}
-            {this.state.balance.eq(0) && (
-              <NoTokensMessage selectedAddress={this.state.selectedAddress} />
-            )}
+          <div className="col-10 offset-1">
+            <h5>There are 2 options:</h5>
+            <ol>
+              <li>I, the owner of this address, Opt-out completely from the EBOG DAO.</li>
+              <li>I, the owner of this address, Opt-in to the EBOG DAO. I have read and agreed to the participation agreement below.</li>
+            </ol>
+            <p>
+              If you do not opt-in or out, you are still a member of the EBOG DAO. You still have the same voting power, however you will not receive airdrops, payments, or other benefits. This to protect the EBOG DAO, it’s members, and assets.
+            </p><br/>
+            <h6>Participation Agreement</h6>
+            <p>
+              Please read this participation agreement ("agreement") carefully before confirming your intent to be bound by it and participating in the EBOG DAO. This agreement includes the terms of participation in the EBOG DAO. You understand, agree and confirm that:
+            </p>
+            <ol>
+              <li>The EBOG DAO is an experiment in the field of decentralized governance structures, in which participation is entirely at your own risk.</li>
+              <li>This agreement has legal consequences and by entering into this agreement you release all rights, claims, or other causes of action whether in equity or law you may have against EBOG DAO service providers or other EBOG DAO participants.<br/>You also agree to waive and limit any potential liability of EBOG DAO service providers or other EBOG DAO participants.</li>
+              <li>You are sophisticated and have sufficient technical understanding of the functionality, usage, storage, transmission mechanisms, and intricacies associated with cryptographic tokens, token storage facilities (including wallets), blockchain technology, and blockchain-based software systems.</li>
+            </ol>
+          </div>
+        </div>
 
-            {/*
-              This component displays a form that the user can use to send a 
-              transaction and transfer some tokens.
-              The component doesn't have logic, it just calls the transferTokens
-              callback.
-            */}
-            {this.state.balance.gt(0) && (
-              <Transfer
-                transferTokens={(to, amount) =>
-                  this._transferTokens(to, amount)
-                }
-                tokenSymbol={this.state.tokenData.symbol}
-              />
-            )}
+        <div className="row my-4">
+          <div className="col-6 text-center">
+            <button
+              className="btn btn-success"
+              type="button"
+              onClick={this._optIn}
+            >
+              Opt In
+            </button>
+          </div>
+
+          <div className="col-6 text-center">
+            <button
+              className="btn btn-danger"
+              type="button"
+              onClick={this._optOut}
+            >
+              Opt Out
+            </button>
           </div>
         </div>
       </div>
@@ -173,7 +192,7 @@ export class Dapp extends React.Component {
 
     // To connect to the user's wallet, we have to run this method.
     // It returns a promise that will resolve to the user's address.
-    const [selectedAddress] = await window.ethereum.enable();
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
 
     // Once we have the address, we can initialize the application.
 
@@ -182,7 +201,7 @@ export class Dapp extends React.Component {
       return;
     }
 
-    this._initialize(selectedAddress);
+    this._initialize(accounts[0]);
 
     // We reinitialize it whenever the user changes their account.
     window.ethereum.on("accountsChanged", ([newAddress]) => {
@@ -190,16 +209,16 @@ export class Dapp extends React.Component {
       // `accountsChanged` event can be triggered with an undefined newAddress.
       // This happens when the user removes the Dapp from the "Connected
       // list of sites allowed access to your addresses" (Metamask > Settings > Connections)
-      // To avoid errors, we reset the dapp state 
+      // To avoid errors, we reset the dapp state
       if (newAddress === undefined) {
         return this._resetState();
       }
-      
+
       this._initialize(newAddress);
     });
-    
+
     // We reset the dapp state if the network is changed
-    window.ethereum.on("networkChanged", ([networkId]) => {
+    window.ethereum.on("chainChanged", ([networkId]) => {
       this._stopPollingData();
       this._resetState();
     });
@@ -221,6 +240,7 @@ export class Dapp extends React.Component {
     this._intializeEthers();
     this._getTokenData();
     this._startPollingData();
+    this._getAgreementData();
   }
 
   async _intializeEthers() {
@@ -232,6 +252,12 @@ export class Dapp extends React.Component {
     this._token = new ethers.Contract(
       contractAddress.Token,
       TokenArtifact.abi,
+      this._provider.getSigner(0)
+    );
+
+    this._agreement = new ethers.Contract(
+      contractAddress.EBOGAgreement,
+      EBOGAgreementArtifact.abi,
       this._provider.getSigner(0)
     );
   }
@@ -262,6 +288,37 @@ export class Dapp extends React.Component {
     const symbol = await this._token.symbol();
 
     this.setState({ tokenData: { name, symbol } });
+  }
+
+  async _getAgreementData() {
+    const name = await this._agreement.name();
+    const symbol = await this._agreement.symbol();
+
+    this.setState({ agreementName: name, agreementSymbol: symbol });
+  }
+
+  async _optIn() {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const contract = new ethers.Contract(contractAddress.EBOGAgreement, EBOGAgreementArtifact.abi, provider.getSigner());
+
+    try {
+      const transaction = await contract.optIntoEBOG();
+      this.setState({ txBeingSent: transaction.hash });
+    } catch (error) {
+      this.setState({ transactionError: error })
+    }
+  }
+
+  async _optOut() {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const contract = new ethers.Contract(contractAddress.EBOGAgreement, EBOGAgreementArtifact.abi, provider.getSigner());
+
+    try {
+      const transaction = await contract.optOutOfEBOG();
+      this.setState({ txBeingSent: transaction.hash });
+    } catch (error) {
+      this.setState({ transactionError: error })
+    }
   }
 
   async _updateBalance() {
@@ -354,13 +411,13 @@ export class Dapp extends React.Component {
     this.setState(this.initialState);
   }
 
-  // This method checks if Metamask selected network is Localhost:8545 
+  // This method checks if Metamask selected network is Localhost:8545
   _checkNetwork() {
     if (window.ethereum.networkVersion === HARDHAT_NETWORK_ID) {
       return true;
     }
 
-    this.setState({ 
+    this.setState({
       networkError: 'Please connect Metamask to Localhost:8545'
     });
 
