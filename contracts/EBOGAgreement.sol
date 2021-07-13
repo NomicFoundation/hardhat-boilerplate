@@ -66,6 +66,7 @@ contract EBOGAgreement is AccessControl, Ownable {
 
     function getAddressStatus(address _address) public view returns (string memory) {
         require(isMember(msg.sender), "Restricted to members.");
+        
         if (optIn[_address]) {
             return "This address voted to Opt In";
         } else if (optOut[_address]) {

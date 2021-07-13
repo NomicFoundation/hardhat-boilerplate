@@ -349,7 +349,11 @@ export class Dapp extends React.Component {
     const optInAccounts = await this._agreement.fetchOptInAccounts();
     const optOutAccounts = await this._agreement.fetchOptOutAccounts();
 
-    this.setState({ totalAccounts: totalAccounts.toNumber(), optInAccounts, optOutAccounts });
+    this.setState({
+      optInAccounts: optInAccounts,
+      optOutAccounts: optOutAccounts,
+      totalAccounts: totalAccounts.toNumber()
+    });
   }
 
   async _optIn() {
@@ -358,15 +362,12 @@ export class Dapp extends React.Component {
 
     try {
       const transaction = await contract.optIntoEBOG();
-      this._connectWallet();
       this.setState({ txBeingSent: transaction.hash });
 
       await transaction.wait()
-      this._connectWallet();
       this.setState({ txBeingSent: undefined });
 
     } catch (error) {
-      this._connectWallet();
       this.setState({
         txBeingSent: undefined,
         transactionError: error
@@ -380,15 +381,12 @@ export class Dapp extends React.Component {
 
     try {
       const transaction = await contract.optOutOfEBOG();
-      this._connectWallet()
       this.setState({ txBeingSent: transaction.hash });
 
       await transaction.wait()
-      this._connectWallet();
       this.setState({ txBeingSent: undefined });
 
     } catch (error) {
-      this._connectWallet();
       this.setState({
         txBeingSent: undefined,
         transactionError: error })
