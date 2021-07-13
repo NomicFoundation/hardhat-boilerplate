@@ -29,7 +29,11 @@
     "chai": "^4.2.0",
     "ethereum-waffle": "^3.1.1",
     "ethers": "^5.0.0",
-    "hardhat": "^2.0.4",
-    "husky": "^4.2.5"
+    "hardhat": "^2.4.3",
+    "husky": "^4.2.5",
+    "solc": "^0.8.0"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.2.0"
   }
 }

@@ -1,6 +1,6 @@
 // contracts/GLDToken.sol
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 /**
 ██████████████████████▀████████████████████
@@ -19,28 +19,53 @@ Please read this participation agreement ("agreement") carefully before confirmi
 3. You are sophisticated and have sufficient technical understanding of the functionality, usage, storage, transmission mechanisms, and intricacies associated with cryptographic tokens, token storage facilities (including wallets), blockchain technology, and blockchain-based software systems.
 */
 
-contract EBOGAgreement {
-    string public name = "EBOG Agreement";
-    string public symbol = "OPT";
 
-    mapping (address => bool) optIn;
-    mapping (address => bool) optOut;
+import "@openzeppelin/contracts/access/AccessControl.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "hardhat/console.sol";
 
-    function optIntoEBOG() public {
-        require(!optIn[msg.sender], 'You have already voted: Opted In');
-        require(!optOut[msg.sender], 'You have already voted: Opted Out');
+contract EBOGAgreement is AccessControl, Ownable {
 
-        optIn[msg.sender]  = true;
+    uint256 public totalAccounts = 0;
+
+    address[] public optInAccounts;
+    address[] public optOutAccounts;
+
+    mapping (address => bool) public optIn;
+    mapping (address => bool) public optOut;
+
+    // @dev Create the community role with the contract owner as a member.
+    constructor() {
+        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _setupRole('EBOG', msg.sender);
     }
 
-    function optOutOfEBOG() public {
-        require(!optIn[msg.sender], 'You have already voted: Opted In');
-        require(!optOut[msg.sender], 'You have already voted: Opted Out');
+    function optIntoEBOG() public onlyMember {
+        require(!optIn[msg.sender] && !optOut[msg.sender], 'You have already voted');
 
+        totalAccounts += 1;
+        optIn[msg.sender] = true;
+        optInAccounts.push(msg.sender);
+    }
+
+    function fetchOptInAccounts() public view returns (address[] memory) {
+        return optInAccounts;
+    }
+
+    function optOutOfEBOG() public onlyMember {
+        require(!optIn[msg.sender] && !optOut[msg.sender], 'You have already voted');
+
+        totalAccounts += 1;
         optOut[msg.sender] = true;
+        optOutAccounts.push(msg.sender);
+    }
+
+    function fetchOptOutAccounts() public view returns (address[] memory) {
+        return optOutAccounts;
     }
 
     function getAddressStatus(address _address) public view returns (string memory) {
+        require(isMember(msg.sender), "Restricted to members.");
         if (optIn[_address]) {
             return "This address voted to Opt In";
         } else if (optOut[_address]) {
@@ -49,4 +74,34 @@ contract EBOGAgreement {
             return "This address has not voted.";
         }
     }
+
+    // @dev Restricted to members of the community.
+    modifier onlyMember() {
+        require(isMember(msg.sender), "Restricted to members.");
+        _;
+    }
+
+    // @dev Return `true` if the `account` belongs to the community.
+    function isMember(address account) public virtual view returns (bool) {
+        return hasRole('EBOG', account);
+    }
+
+    // @dev Add a member of the community. Caller must already belong to the community.
+    function addMember(address account) public virtual onlyOwner() {
+        grantRole('EBOG', account);
+    }
+
+    // @dev Add a member of the community. Caller must already belong to the community.
+    function addMembers(address[] memory accounts) public virtual onlyOwner() {
+        for(uint i=0; i<accounts.length; i++)
+        {
+            grantRole('EBOG', accounts[i]);
+        }
+    }
+
+    // @dev Remove oneself as a member of the community.
+    function leaveCommunity() public virtual { // Roles will check membership.
+        renounceRole('EBOG', msg.sender);
+    }
+
 }
