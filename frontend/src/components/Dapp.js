@@ -236,7 +236,7 @@ export class Dapp extends React.Component {
     );
   }
 
-  // The next to methods are needed to start and stop polling data. While
+  // The next two methods are needed to start and stop polling data. While
   // the data being polled here is specific to this example, you can use this
   // pattern to read any data from your contracts.
   //
