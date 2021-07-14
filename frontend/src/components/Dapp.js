@@ -303,7 +303,7 @@ export class Dapp extends React.Component {
 
       // The receipt, contains a status flag, which is 0 to indicate an error.
       if (receipt.status === 0) {
-        // We can't know the exact error that made the transaction fail once it
+        // We can't know the exact error that made the transaction fail when it
         // was mined, so we throw this generic one.
         throw new Error("Transaction failed");
       }
