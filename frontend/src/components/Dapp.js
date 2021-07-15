@@ -103,7 +103,7 @@ export class Dapp extends React.Component {
         <div className="row">
           <div className="col-10 offset-1">
             <h1>
-              EBOG DAO Agreement
+              EBOG DAO Agreement 2021
             </h1>
             <p>
               Welcome <b>({this._minifyHash(this.state.selectedAddress)})</b>
