@@ -55,10 +55,14 @@ export class Dapp extends React.Component {
       txBeingSent: undefined,
       transactionError: undefined,
       networkError: undefined,
+      totalAccounts: undefined,
+      optInAccounts: [],
+      optOutAccounts: []
     };
 
-    this._optIn = this._optIn.bind(this)
-    this._optOut = this._optOut.bind(this)
+    this._minifyHash = this._minifyHash.bind(this);
+    this._optIn = this._optIn.bind(this);
+    this._optOut = this._optOut.bind(this);
 
     this.state = this.initialState;
   }
@@ -99,10 +103,10 @@ export class Dapp extends React.Component {
         <div className="row">
           <div className="col-10 offset-1">
             <h1>
-              {this.state.agreementName} ({this.state.agreementSymbol})
+              EBOG DAO Agreement 2021
             </h1>
             <p>
-              Welcome <b>{this.state.selectedAddress}</b>
+              Welcome <b>({this._minifyHash(this.state.selectedAddress)})</b>
             </p>
           </div>
         </div>
@@ -155,8 +159,10 @@ export class Dapp extends React.Component {
           </div>
         </div>
 
+        <h5 className="text-center mt-5">Total: {this.state.totalAccounts}</h5>
+
         <div className="row my-4">
-          <div className="col-6 text-center">
+          <div className="col-4 offset-1 text-center">
             <button
               className="btn btn-success"
               type="button"
@@ -164,9 +170,29 @@ export class Dapp extends React.Component {
             >
               Opt In
             </button>
+            <div className="mt-5">
+              <table className="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Opted In</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.optInAccounts.map((account, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>{this._minifyHash(account)}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
 
-          <div className="col-6 text-center">
+          <div className="col-4 offset-2 text-center">
             <button
               className="btn btn-danger"
               type="button"
@@ -174,6 +200,26 @@ export class Dapp extends React.Component {
             >
               Opt Out
             </button>
+            <div className="mt-5">
+              <table className="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Opted Out</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.optOutAccounts.map((account, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>{this._minifyHash(account)}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -240,7 +286,7 @@ export class Dapp extends React.Component {
     this._intializeEthers();
     this._getTokenData();
     this._startPollingData();
-    this._getAgreementData();
+    this._fetchAccounts();
   }
 
   async _intializeEthers() {
@@ -281,6 +327,14 @@ export class Dapp extends React.Component {
     this._pollDataInterval = undefined;
   }
 
+  _minifyHash(address) {
+    if (!address) return
+    const hashStart = address.substring(0, 6)
+    const hashEnd = address.substring(address.length-4, address.length)
+
+    return `${hashStart}...${hashEnd}`
+  }
+
   // The next two methods just read from the contract and store the results
   // in the component state.
   async _getTokenData() {
@@ -290,11 +344,16 @@ export class Dapp extends React.Component {
     this.setState({ tokenData: { name, symbol } });
   }
 
-  async _getAgreementData() {
-    const name = await this._agreement.name();
-    const symbol = await this._agreement.symbol();
+  async _fetchAccounts() {
+    const totalAccounts = await this._agreement.totalAccounts();
+    const optInAccounts = await this._agreement.fetchOptInAccounts();
+    const optOutAccounts = await this._agreement.fetchOptOutAccounts();
 
-    this.setState({ agreementName: name, agreementSymbol: symbol });
+    this.setState({
+      optInAccounts: optInAccounts,
+      optOutAccounts: optOutAccounts,
+      totalAccounts: totalAccounts.toNumber()
+    });
   }
 
   async _optIn() {
@@ -304,8 +363,15 @@ export class Dapp extends React.Component {
     try {
       const transaction = await contract.optIntoEBOG();
       this.setState({ txBeingSent: transaction.hash });
+
+      await transaction.wait()
+      this.setState({ txBeingSent: undefined });
+
     } catch (error) {
-      this.setState({ transactionError: error })
+      this.setState({
+        txBeingSent: undefined,
+        transactionError: error
+      })
     }
   }
 
@@ -316,8 +382,14 @@ export class Dapp extends React.Component {
     try {
       const transaction = await contract.optOutOfEBOG();
       this.setState({ txBeingSent: transaction.hash });
+
+      await transaction.wait()
+      this.setState({ txBeingSent: undefined });
+
     } catch (error) {
-      this.setState({ transactionError: error })
+      this.setState({
+        txBeingSent: undefined,
+        transactionError: error })
     }
   }
 
