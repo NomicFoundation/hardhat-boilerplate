@@ -1,17 +1,11 @@
 import React from "react";
-
-// We'll use ethers to interact with the Ethereum network and our contract
 import { ethers } from "ethers";
-
-// We import the contract's artifacts and address here, as we are going to be
-// using them with ethers
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+// Contracts
 import TokenArtifact from "../contracts/Token.json";
 import EBOGAgreementArtifact from "../contracts/EBOGAgreement.json";
 import contractAddress from "../contracts/contract-address.json";
-
-// All the logic of this dapp is contained in the Dapp component.
-// These other components are just presentational ones: they don't have any
-// logic. They just render HTML.
+// Components
 import { NoWalletDetected } from "./NoWalletDetected";
 import { ConnectWallet } from "./ConnectWallet";
 import { Loading } from "./Loading";
@@ -19,13 +13,16 @@ import { TransactionErrorMessage } from "./TransactionErrorMessage";
 import { WaitingForTransactionMessage } from "./WaitingForTransactionMessage";
 // import { Transfer } from "./Transfer";
 // import { NoTokensMessage } from "./NoTokensMessage";
+import { Navigation } from "./Navigation";
+import { Home } from "./Home";
+import { Agreement } from "./EBOG/Agreement";
+import { Footer } from "./Footer";
+// STYLESHEETS
 import "../stylesheets/Dapp.css";
-
-// This is the Hardhat Network id, you might change it in the hardhat.config.js
-// Here's a list of network ids https://docs.metamask.io/guide/ethereum-provider.html#properties
-// to use when deploying to other networks.
+// NETWORKS
+// const MAINNET_NETWORK_ID = '1';
+// const RINKEBY_NETWORK_ID = '4';
 const HARDHAT_NETWORK_ID = '1337';
-
 // This is an error code that indicates that the user canceled a transaction
 const ERROR_CODE_TX_REJECTED_BY_USER = 4001;
 
@@ -35,23 +32,13 @@ const ERROR_CODE_TX_REJECTED_BY_USER = 4001;
 //   3. Polls the user balance to keep it updated.
 //   4. Transfers tokens by sending transactions
 //   5. Renders the whole application
-//
-// Note that (3) and (4) are specific of this sample application, but they show
-// you how to keep your Dapp and contract's state in sync,  and how to send a
-// transaction.
 export class Dapp extends React.Component {
   constructor(props) {
     super(props);
-
-    // We store multiple things in Dapp's state.
-    // You don't need to follow this pattern, but it's an useful example.
     this.initialState = {
-      // The info of the token (i.e. It's Name and symbol)
       tokenData: undefined,
-      // The user's address and balance
       selectedAddress: undefined,
       balance: undefined,
-      // The ID about transactions being sent, and any possible error with them
       txBeingSent: undefined,
       transactionError: undefined,
       networkError: undefined,
@@ -60,170 +47,7 @@ export class Dapp extends React.Component {
       optOutAccounts: []
     };
 
-    this._minifyHash = this._minifyHash.bind(this);
-    this._optIn = this._optIn.bind(this);
-    this._optOut = this._optOut.bind(this);
-
     this.state = this.initialState;
-  }
-
-  render() {
-    // Ethereum wallets inject the window.ethereum object. If it hasn't been
-    // injected, we instruct the user to install MetaMask.
-    if (window.ethereum === undefined) {
-      return <NoWalletDetected />;
-    }
-
-    // The next thing we need to do, is to ask the user to connect their wallet.
-    // When the wallet gets connected, we are going to save the users's address
-    // in the component's state. So, if it hasn't been saved yet, we have
-    // to show the ConnectWallet component.
-    //
-    // Note that we pass it a callback that is going to be called when the user
-    // clicks a button. This callback just calls the _connectWallet method.
-    if (!this.state.selectedAddress) {
-      return (
-        <ConnectWallet
-          connectWallet={() => this._connectWallet()}
-          networkError={this.state.networkError}
-          dismiss={() => this._dismissNetworkError()}
-        />
-      );
-    }
-
-    // If the token data or the user's balance hasn't loaded yet, we show
-    // a loading component.
-    if (!this.state.tokenData || !this.state.balance) {
-      return <Loading />;
-    }
-
-    // If everything is loaded, we render the application.
-    return (
-      <div className="container p-4">
-        <div className="row">
-          <div className="col-10 offset-1">
-            <h1>
-              EBOG DAO Agreement 2021
-            </h1>
-            <p>
-              Welcome <b>({this._minifyHash(this.state.selectedAddress)})</b>
-            </p>
-          </div>
-        </div>
-
-        <hr />
-
-        <div className="row">
-          <div className="col-10 offset-1">
-            {/*
-              Sending a transaction isn't an immidiate action. You have to wait
-              for it to be mined.
-              If we are waiting for one, we show a message here.
-            */}
-            {this.state.txBeingSent && (
-              <WaitingForTransactionMessage txHash={this.state.txBeingSent} />
-            )}
-
-            {/*
-              Sending a transaction can fail in multiple ways.
-              If that happened, we show a message here.
-            */}
-            {this.state.transactionError && (
-              <TransactionErrorMessage
-                message={this._getRpcErrorMessage(this.state.transactionError)}
-                dismiss={() => this._dismissTransactionError()}
-              />
-            )}
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col-10 offset-1">
-            <h5>There are 2 options:</h5>
-            <ol>
-              <li>I, the owner of this address, Opt-out completely from the EBOG DAO.</li>
-              <li>I, the owner of this address, Opt-in to the EBOG DAO. I have read and agreed to the participation agreement below.</li>
-            </ol>
-            <p>
-              If you do not opt-in or out, you are still a member of the EBOG DAO. You still have the same voting power, however you will not receive airdrops, payments, or other benefits. This to protect the EBOG DAO, it’s members, and assets.
-            </p><br/>
-            <h6>Participation Agreement</h6>
-            <p>
-              Please read this participation agreement ("agreement") carefully before confirming your intent to be bound by it and participating in the EBOG DAO. This agreement includes the terms of participation in the EBOG DAO. You understand, agree and confirm that:
-            </p>
-            <ol>
-              <li>The EBOG DAO is an experiment in the field of decentralized governance structures, in which participation is entirely at your own risk.</li>
-              <li>This agreement has legal consequences and by entering into this agreement you release all rights, claims, or other causes of action whether in equity or law you may have against EBOG DAO service providers or other EBOG DAO participants.<br/>You also agree to waive and limit any potential liability of EBOG DAO service providers or other EBOG DAO participants.</li>
-              <li>You are sophisticated and have sufficient technical understanding of the functionality, usage, storage, transmission mechanisms, and intricacies associated with cryptographic tokens, token storage facilities (including wallets), blockchain technology, and blockchain-based software systems.</li>
-            </ol>
-          </div>
-        </div>
-
-        <h5 className="text-center mt-5">Total: {this.state.totalAccounts}</h5>
-
-        <div className="row my-4">
-          <div className="col-4 offset-1 text-center">
-            <button
-              className="btn btn-success"
-              type="button"
-              onClick={this._optIn}
-            >
-              Opt In
-            </button>
-            <div className="mt-5">
-              <table className="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Opted In</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.optInAccounts.map((account, index) => {
-                    return (
-                      <tr key={index}>
-                        <td>{index + 1}</td>
-                        <td>{this._minifyHash(account)}</td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <div className="col-4 offset-2 text-center">
-            <button
-              className="btn btn-danger"
-              type="button"
-              onClick={this._optOut}
-            >
-              Opt Out
-            </button>
-            <div className="mt-5">
-              <table className="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Opted Out</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.optOutAccounts.map((account, index) => {
-                    return (
-                      <tr key={index}>
-                        <td>{index + 1}</td>
-                        <td>{this._minifyHash(account)}</td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
   }
 
   componentWillUnmount() {
@@ -240,9 +64,6 @@ export class Dapp extends React.Component {
     // It returns a promise that will resolve to the user's address.
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
 
-    // Once we have the address, we can initialize the application.
-
-    // First we check the network
     if (!this._checkNetwork()) {
       return;
     }
@@ -458,18 +279,14 @@ export class Dapp extends React.Component {
     }
   }
 
-  // This method just clears part of the state.
   _dismissTransactionError() {
     this.setState({ transactionError: undefined });
   }
 
-  // This method just clears part of the state.
   _dismissNetworkError() {
     this.setState({ networkError: undefined });
   }
 
-  // This is an utility method that turns an RPC error into a human readable
-  // message.
   _getRpcErrorMessage(error) {
     if (error.data) {
       return error.data.message;
@@ -478,12 +295,10 @@ export class Dapp extends React.Component {
     return error.message;
   }
 
-  // This method resets the state
   _resetState() {
     this.setState(this.initialState);
   }
 
-  // This method checks if Metamask selected network is Localhost:8545
   _checkNetwork() {
     if (window.ethereum.networkVersion === HARDHAT_NETWORK_ID) {
       return true;
@@ -494,5 +309,76 @@ export class Dapp extends React.Component {
     });
 
     return false;
+  }
+
+  render() {
+    // Ethereum wallets inject the window.ethereum object. If it hasn't been
+    // injected, we instruct the user to install MetaMask.
+    if (window.ethereum === undefined) {
+      return <NoWalletDetected />;
+    }
+
+    // The next thing we need to do, is to ask the user to connect their wallet.
+    // When the wallet gets connected, we are going to save the users's address
+    // in the component's state. So, if it hasn't been saved yet, we have
+    // to show the ConnectWallet component.
+    //
+    // Note that we pass it a callback that is going to be called when the user
+    // clicks a button. This callback just calls the _connectWallet method.
+    if (!this.state.selectedAddress) {
+      return (
+        <ConnectWallet
+          connectWallet={() => this._connectWallet()}
+          networkError={this.state.networkError}
+          dismiss={() => this._dismissNetworkError()}
+        />
+      );
+    }
+
+    // If the token data or the user's balance hasn't loaded yet, we show
+    // a loading component.
+    if (!this.state.tokenData || !this.state.balance) {
+      return <Loading />;
+    }
+
+    // If everything is loaded, we render the application.
+    return (
+      <Router>
+        <Navigation/>
+        <div className="row">
+          <div className="col-10 offset-1">
+            {this.state.txBeingSent && (
+              <WaitingForTransactionMessage txHash={this.state.txBeingSent} />
+            )}
+            {this.state.transactionError && (
+              <TransactionErrorMessage
+                message={this._getRpcErrorMessage(this.state.transactionError)}
+                dismiss={() => this._dismissTransactionError()}
+              />
+            )}
+          </div>
+        </div>
+        <div id="dapp">
+          <Switch>
+            <Route path="/" exact>
+              <Home
+
+              />
+            </Route>
+            <Route path="/agreement">
+              <Agreement
+                optIn={() => this._optIn()}
+                optInAccounts={this.state.optInAccounts}
+                optOut={() => this._optOut()}
+                optOutAccounts={this.state.optOutAccounts}
+                selectedAddress={this._minifyHash(this.state.selectedAddress)}
+                totalAccounts={this.state.totalAccounts}
+              />
+            </Route>
+          </Switch>
+        </div>
+        <Footer/>
+      </Router>
+    );
   }
 }
