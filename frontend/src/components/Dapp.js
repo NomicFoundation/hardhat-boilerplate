@@ -15,7 +15,7 @@ import { WaitingForTransactionMessage } from "./WaitingForTransactionMessage";
 // import { NoTokensMessage } from "./NoTokensMessage";
 import { Navigation } from "./Navigation";
 import { Home } from "./Home";
-import { Agreement } from "./Contracts/Agreement";
+import { Agreement } from "./EBOG/Agreement";
 import { Footer } from "./Footer";
 // STYLESHEETS
 import "../stylesheets/Dapp.css";
@@ -23,6 +23,15 @@ import "../stylesheets/Dapp.css";
 // const MAINNET_NETWORK_ID = '1';
 // const RINKEBY_NETWORK_ID = '4';
 const HARDHAT_NETWORK_ID = '1337';
+// CONSTANTS
+const MEMBERS = [
+  "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+  "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc",
+  "0x90f79bf6eb2c4f870365e785982e1f101e93b906",
+  "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65",
+  "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc"
+]
+
 // This is an error code that indicates that the user canceled a transaction
 const ERROR_CODE_TX_REJECTED_BY_USER = 4001;
 
@@ -163,6 +172,25 @@ export class Dapp extends React.Component {
     const symbol = await this._token.symbol();
 
     this.setState({ tokenData: { name, symbol } });
+  }
+
+  async _addMembers() {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const contract = new ethers.Contract(contractAddress.EBOGAgreement, EBOGAgreementArtifact.abi, provider.getSigner());
+
+    try {
+      const transaction = await contract.addMembers(MEMBERS);
+      this.setState({ txBeingSent: transaction.hash });
+
+      await transaction.wait()
+      this.setState({ txBeingSent: undefined });
+
+    } catch (error) {
+      this.setState({
+        txBeingSent: undefined,
+        transactionError: error
+      })
+    }
   }
 
   async _fetchAccounts() {
@@ -366,6 +394,8 @@ export class Dapp extends React.Component {
             </Route>
             <Route path="/agreement">
               <Agreement
+                addMembers={() => this._addMembers()}
+                minifyHash={() => this._minifyHash()}
                 optIn={() => this._optIn()}
                 optInAccounts={this.state.optInAccounts}
                 optOut={() => this._optOut()}

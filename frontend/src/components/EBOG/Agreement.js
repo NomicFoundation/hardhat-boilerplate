@@ -1,7 +1,8 @@
 import React from "react";
+import { Button } from "react-bootstrap";
 import "../../stylesheets/Dapp.css";
 
-export function Agreement({ optIn, optInAccounts, optOut, optOutAccounts, selectedAddress, totalAccounts }) {
+export function Agreement({ addMembers, optIn, optInAccounts, optOut, optOutAccounts, selectedAddress, totalAccounts }) {
   return (
     <div className="container mb-5 p-4">
       <div className="row">
@@ -39,17 +40,26 @@ export function Agreement({ optIn, optInAccounts, optOut, optOutAccounts, select
         </div>
       </div>
 
-      <h5 className="text-center mt-5">Total: {totalAccounts}</h5>
+      <div className="text-center mt-5">
+        <h5>Total: {totalAccounts}</h5>
+        <Button
+          className="mt-3 px-3 py-2"
+          variant="primary"
+          onClick={addMembers}
+        >
+          Add Members
+        </Button>
+      </div>
 
       <div className="row my-4">
         <div className="col-4 offset-1 text-center">
-          <button
-            className="btn btn-success"
-            type="button"
+          <Button
+            className="px-3 py-2"
+            variant="success"
             onClick={optIn}
           >
             Opt In
-          </button>
+          </Button>
           <div className="mt-5">
             <table className="table table-bordered">
               <thead>
@@ -73,13 +83,13 @@ export function Agreement({ optIn, optInAccounts, optOut, optOutAccounts, select
         </div>
 
         <div className="col-4 offset-2 text-center">
-          <button
-            className="btn btn-danger"
-            type="button"
+          <Button
+            className="px-3 py-2"
+            variant="danger"
             onClick={optOut}
           >
             Opt Out
-          </button>
+          </Button>
           <div className="mt-5">
             <table className="table table-bordered">
               <thead>
