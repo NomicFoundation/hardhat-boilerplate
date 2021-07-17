@@ -4,7 +4,7 @@ import "../stylesheets/Dapp.css";
 
 export function Footer() {
   return (
-    <Navbar expand="lg" bg="dark" variant="dark">
+    <Navbar className="fixed-bottom" expand="lg" bg="dark" variant="dark">
       <Container className="justify-content-center">
         <p className="footer-text">
           Footer

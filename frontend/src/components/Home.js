@@ -4,8 +4,8 @@ import "../stylesheets/Dapp.css";
 
 export function Home() {
   return (
-    <Container>
-      <h1 className="header-text">
+    <Container className="d-flex justify-content-center">
+      <h1 className="m-5">
         Home
       </h1>
     </Container>

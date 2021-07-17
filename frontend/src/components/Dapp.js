@@ -362,7 +362,6 @@ export class Dapp extends React.Component {
           <Switch>
             <Route path="/" exact>
               <Home
-
               />
             </Route>
             <Route path="/agreement">

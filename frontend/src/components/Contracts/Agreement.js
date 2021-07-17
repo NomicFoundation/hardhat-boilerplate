@@ -3,7 +3,7 @@ import "../../stylesheets/Dapp.css";
 
 export function Agreement({ optIn, optInAccounts, optOut, optOutAccounts, selectedAddress, totalAccounts }) {
   return (
-    <div className="container p-4">
+    <div className="container mb-5 p-4">
       <div className="row">
         <div className="col-10 offset-1">
           <h1>
