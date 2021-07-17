@@ -15,7 +15,7 @@ import { WaitingForTransactionMessage } from "./WaitingForTransactionMessage";
 // import { NoTokensMessage } from "./NoTokensMessage";
 import { Navigation } from "./Navigation";
 import { Home } from "./Home";
-import { Agreement } from "./EBOG/Agreement";
+import { Agreement } from "./Contracts/Agreement";
 import { Footer } from "./Footer";
 // STYLESHEETS
 import "../stylesheets/Dapp.css";
