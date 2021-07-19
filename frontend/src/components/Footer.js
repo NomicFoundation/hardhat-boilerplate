@@ -14,13 +14,13 @@ export function Footer() {
       </Container>
       <Container className="justify-content-end ebog-main-text">
         <div className="mr-3">
-          <FontAwesomeIcon icon={faGithub}/>
-          </div>
-          <div className="mr-3">
-          <FontAwesomeIcon icon={faTwitterSquare}/>
-          </div>
-          <div className="mr-3">
-          <FontAwesomeIcon icon={faDiscord}/>
+           <a href="https://github.com/EBOGDAO" className="ebog-main-text"><FontAwesomeIcon icon={faGithub}/></a>
+        </div>
+        <div className="mr-3">
+          <a href="https://twitter.com/EBOGDAO" className="ebog-main-text"><FontAwesomeIcon icon={faTwitterSquare}/></a>
+        </div>
+        <div className="mr-3">
+          <a href="https://discord.gg/brGNRKnx" className="ebog-main-text"><FontAwesomeIcon icon={faDiscord}/></a>
         </div>
       </Container>
     </Navbar>

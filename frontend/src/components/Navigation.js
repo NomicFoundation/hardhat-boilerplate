@@ -16,7 +16,7 @@ export function Navigation() {
             <b><Nav.Link href="/agreement" className="ebog-main-text">Agreement</Nav.Link></b>
           </Nav>
           <Nav className="ml-auto">
-            <Nav.Link href="/" className="ebog-secondary"><FontAwesomeIcon icon={faEthereum}/> Connected Account</Nav.Link>
+            <Nav.Link href="/" className="ebog-main-text"><FontAwesomeIcon icon={faEthereum}/> Connected Account</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

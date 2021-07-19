@@ -22,7 +22,7 @@ export function ConnectWallet({ connectWallet, networkError, dismiss }) {
         <br></br><br></br><br></br><br></br>
           <img src="logo192.png"></img>
           <br></br><br></br>
-          <p className="ebog-secondary"><FontAwesomeIcon icon={faEthereum}/> Ethereum Single Sing-on</p>
+          <p className="ebog-secondary"><FontAwesomeIcon icon={faEthereum}/> Ethereum Single Sign-on</p>
           <button
             className="btn ebog-secondary-bg"
             type="button"
