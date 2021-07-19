@@ -3,6 +3,7 @@ import { Button } from "react-bootstrap";
 import "../../stylesheets/Dapp.css";
 
 export function Agreement({ addMembers, optIn, optInAccounts, optOut, optOutAccounts, selectedAddress, totalAccounts }) {
+  document.body.style.backgroundColor = "#ffffff";
   return (
     <div className="container mb-5 p-4">
       <div className="row">

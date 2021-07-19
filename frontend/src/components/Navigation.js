@@ -1,20 +1,22 @@
 import React from "react";
 import { Navbar, Container, Nav } from "react-bootstrap";
-import "../stylesheets/Dapp.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEthereum } from '@fortawesome/free-brands-svg-icons'
+import { style } from "../stylesheets/Dapp.css";
 
 export function Navigation() {
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar collapseOnSelect expand="lg" className="ebog-gradient-nav">
       <Container>
-        <Navbar.Brand href="/">EBOG</Navbar.Brand>
+        <Navbar.Brand href="/" className="ebog-main-text"><img src="logo192.png" width="30" height/></Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/agreement">Agreement</Nav.Link>
+            <b><Nav.Link href="/" className="ebog-main-text">Home</Nav.Link></b>
+            <b><Nav.Link href="/agreement" className="ebog-main-text">Agreement</Nav.Link></b>
           </Nav>
           <Nav className="ml-auto">
-            <Nav.Link href="/">Connected Account</Nav.Link>
+            <Nav.Link href="/" className="ebog-secondary"><FontAwesomeIcon icon={faEthereum}/> Connected Account</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

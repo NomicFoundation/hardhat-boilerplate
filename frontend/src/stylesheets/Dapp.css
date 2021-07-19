@@ -1,15 +1,38 @@
 .ebog-main {
+    color: #22a4ba !important;
+}
+
+.ebog-main-text {
+    color: #FFFFFF !important;
+}
+.ebog-main-bg {
     background-color: #22a4ba !important;
 }
 
 .ebog-secondary {
-    background-color: #3bf6ed;
+    color: #3bf6ed !important;
+}
+
+.ebog-secondary-bg {
+    background-color: #3bf6ed !important;
 }
 
 .ebog-accent {
-    background-color: #00ff01;
+    color: #00ff01 !important;
+}
+
+.ebog-accent-bg {
+    background-color: #00ff01 !important;
 }
 
 .ebog-alt {
-    background-color: #e31d6a;
+    color: #e31d6a !important;
+}
+
+.jumbo-ebog1 {
+    /*background-image: `url('./logo310.png')` !important;*/
+}
+
+.ebog-gradient-nav {
+    background-color:#09849C; /*this your primary color*/
 }

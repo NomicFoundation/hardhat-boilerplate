@@ -3,11 +3,14 @@ import { Container } from "react-bootstrap";
 import "../stylesheets/Dapp.css";
 
 export function Home() {
+  document.body.style.backgroundColor = "#ffffff";
   return (
     <Container className="d-flex justify-content-center">
-      <h1 className="m-5">
-        Home
-      </h1>
+      <div className="row ">
+        <div className="container jumbo-ebog1">
+
+        </div>
+      </div>
     </Container>
   );
 }
