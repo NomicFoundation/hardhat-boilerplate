@@ -4,7 +4,7 @@ import { faEthereum } from '@fortawesome/free-brands-svg-icons'
 import { NetworkErrorMessage } from "./NetworkErrorMessage";
 
 export function ConnectWallet({ connectWallet, networkError, dismiss }) {
-  document.body.style.backgroundColor = "#09849C";
+  document.body.style.backgroundColor = "#050505";
   return (
     <div className="container  col-4 offset-4">
       <div className="row justify-content-md-center">
@@ -20,12 +20,13 @@ export function ConnectWallet({ connectWallet, networkError, dismiss }) {
 
         <div className="col-6 p-4 text-center">
         <br></br><br></br><br></br><br></br>
-          <img src="logo192.png"></img>
+          <img className="justify-content-md-center" src="og-circle-thick.png" width="250px"></img>
           <br></br><br></br>
-          <p className="ebog-secondary"><FontAwesomeIcon icon={faEthereum}/> Ethereum Single Sign-on</p>
+          <p className="ebog-secondary" style={{color: "#F5F1E3"}}><FontAwesomeIcon icon={faEthereum} style={{color: '#1B9AAA'}} /> Ethereum Single Sign-on</p>
           <button
-            className="btn ebog-secondary-bg"
+            className="btn"
             type="button"
+            style={{color:'white', fontWeight: 'bold', backgroundColor: '#1B9AAA'}} 
             onClick={connectWallet}
           >
             Connect Wallet

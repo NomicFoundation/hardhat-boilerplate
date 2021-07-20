@@ -18,7 +18,7 @@ import { Home } from "./Home";
 import { Agreement } from "./EBOG/Agreement";
 import { Footer } from "./Footer";
 // STYLESHEETS
-import "../stylesheets/Dapp.css";
+import "../stylesheets/Dapp.scss";
 // NETWORKS
 // const MAINNET_NETWORK_ID = '1';
 // const RINKEBY_NETWORK_ID = '4';

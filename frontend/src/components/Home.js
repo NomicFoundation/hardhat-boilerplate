@@ -1,6 +1,6 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import "../stylesheets/Dapp.css";
+import "../stylesheets/Dapp.scss";
 
 export function Home() {
   document.body.style.backgroundColor = "#ffffff";

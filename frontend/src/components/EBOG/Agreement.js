@@ -1,9 +1,9 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import "../../stylesheets/Dapp.css";
+import "../../stylesheets/Dapp.scss";
 
 export function Agreement({ addMembers, optIn, optInAccounts, optOut, optOutAccounts, selectedAddress, totalAccounts }) {
-  document.body.style.backgroundColor = "#ffffff";
+  document.body.style.backgroundColor = "#f5f1e3";
   return (
     <div className="container mb-5 p-4">
       <div className="row">
@@ -12,7 +12,7 @@ export function Agreement({ addMembers, optIn, optInAccounts, optOut, optOutAcco
             EBOG DAO Agreement 2021
           </h1>
           <p>
-            Welcome <b>[{selectedAddress}]</b>
+            Welcome, <b>[{selectedAddress}]</b>
           </p>
         </div>
       </div>
