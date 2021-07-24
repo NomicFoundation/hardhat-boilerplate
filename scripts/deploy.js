@@ -22,16 +22,16 @@ async function main() {
 
   console.log("Token address:", token.address);
 
-  const EBOGAgreement = await ethers.getContractFactory("EBOGAgreement");
-  const ebogAgreement = await EBOGAgreement.deploy();
-  await ebogAgreement.deployed();
+  const Agreement = await ethers.getContractFactory("Agreement");
+  const agreement = await Agreement.deploy();
+  await agreement.deployed();
 
-  console.log("EBOGAgreement address:", ebogAgreement.address);
+  console.log("Agreement address:", agreement.address);
 
-  saveFrontendFiles(token, ebogAgreement);
+  saveFrontendFiles(token, agreement);
 }
 
-function saveFrontendFiles(token, ebogAgreement) {
+function saveFrontendFiles(token, agreement) {
   const fs = require("fs");
   const contractsDir = __dirname + "/../frontend/src/contracts";
 
@@ -41,11 +41,11 @@ function saveFrontendFiles(token, ebogAgreement) {
 
   fs.writeFileSync(
     contractsDir + "/contract-address.json",
-    JSON.stringify({ Token: token.address, EBOGAgreement: ebogAgreement.address }, undefined, 2)
+    JSON.stringify({ Token: token.address, Agreement: agreement.address }, undefined, 2)
   );
 
   const TokenArtifact = artifacts.readArtifactSync("Token");
-  const EBOGAgreementArtifact = artifacts.readArtifactSync("EBOGAgreement");
+  const AgreementArtifact = artifacts.readArtifactSync("Agreement");
 
   fs.writeFileSync(
     contractsDir + "/Token.json",
@@ -53,8 +53,8 @@ function saveFrontendFiles(token, ebogAgreement) {
   );
 
   fs.writeFileSync(
-    contractsDir + "/EBOGAgreement.json",
-    JSON.stringify(EBOGAgreementArtifact, null, 2)
+    contractsDir + "/Agreement.json",
+    JSON.stringify(AgreementArtifact, null, 2)
   );
 }
 

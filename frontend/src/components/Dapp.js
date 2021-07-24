@@ -1,9 +1,10 @@
 import React from "react";
 import { ethers } from "ethers";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Container } from "react-bootstrap";
 // Contracts
 import TokenArtifact from "../contracts/Token.json";
-import EBOGAgreementArtifact from "../contracts/EBOGAgreement.json";
+import AgreementArtifact from "../contracts/Agreement.json";
 import contractAddress from "../contracts/contract-address.json";
 // Components
 import { NoWalletDetected } from "./NoWalletDetected";
@@ -11,14 +12,13 @@ import { ConnectWallet } from "./ConnectWallet";
 import { Loading } from "./Loading";
 import { TransactionErrorMessage } from "./TransactionErrorMessage";
 import { WaitingForTransactionMessage } from "./WaitingForTransactionMessage";
-// import { Transfer } from "./Transfer";
-// import { NoTokensMessage } from "./NoTokensMessage";
-import { Navigation } from "./Navigation";
-import { Home } from "./Home";
-import { Agreement } from "./EBOG/Agreement";
-import { Footer } from "./Footer";
+import Navigation from "./Navigation";
+import Home from "./Home";
+import Agreement from "./DAO/Agreement";
+import Member from "./DAO/Member";
+import Footer from "./Footer";
 // STYLESHEETS
-import "../stylesheets/Dapp.css";
+import "../stylesheets/Dapp.scss";
 // NETWORKS
 // const MAINNET_NETWORK_ID = '1';
 // const RINKEBY_NETWORK_ID = '4';
@@ -29,7 +29,11 @@ const MEMBERS = [
   "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc",
   "0x90f79bf6eb2c4f870365e785982e1f101e93b906",
   "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65",
-  "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc"
+  "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc",
+  "0x976ea74026e726554db657fa54763abd0c3a0aa9",
+  "0x14dc79964da2c08b23698b3d3cc7ca32193d9955",
+  "0xa0ee7a142d267c1f36714e4a8f75612f20a79720",
+  "0xbcd4042de499d14e55001ccbb24a551f3b954096"
 ]
 
 // This is an error code that indicates that the user canceled a transaction
@@ -52,25 +56,14 @@ export class Dapp extends React.Component {
       transactionError: undefined,
       networkError: undefined,
       totalAccounts: undefined,
-      optInAccounts: [],
-      optOutAccounts: []
+      optedInAccounts: [],
+      optedOutAccounts: []
     };
 
     this.state = this.initialState;
   }
 
-  componentWillUnmount() {
-    // We poll the user's balance, so we have to stop doing that when Dapp
-    // gets unmounted
-    this._stopPollingData();
-  }
-
   async _connectWallet() {
-    // This method is run when the user clicks the Connect. It connects the
-    // dapp to the user's wallet, and initializes it.
-
-    // To connect to the user's wallet, we have to run this method.
-    // It returns a promise that will resolve to the user's address.
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
 
     if (!this._checkNetwork()) {
@@ -81,11 +74,6 @@ export class Dapp extends React.Component {
 
     // We reinitialize it whenever the user changes their account.
     window.ethereum.on("accountsChanged", ([newAddress]) => {
-      this._stopPollingData();
-      // `accountsChanged` event can be triggered with an undefined newAddress.
-      // This happens when the user removes the Dapp from the "Connected
-      // list of sites allowed access to your addresses" (Metamask > Settings > Connections)
-      // To avoid errors, we reset the dapp state
       if (newAddress === undefined) {
         return this._resetState();
       }
@@ -100,12 +88,11 @@ export class Dapp extends React.Component {
     });
   }
 
+  // This method initializes the dapp
   _initialize(userAddress) {
-    // This method initializes the dapp
-
     // We first store the user's address in the component's state
     this.setState({
-      selectedAddress: userAddress,
+      selectedAddress: ethers.utils.getAddress(userAddress),
     });
 
     // Then, we initialize ethers, fetch the token's data, and start polling
@@ -115,7 +102,6 @@ export class Dapp extends React.Component {
     // sample project, but you can reuse the same initialization pattern.
     this._intializeEthers();
     this._getTokenData();
-    this._startPollingData();
     this._fetchAccounts();
   }
 
@@ -132,41 +118,12 @@ export class Dapp extends React.Component {
     );
 
     this._agreement = new ethers.Contract(
-      contractAddress.EBOGAgreement,
-      EBOGAgreementArtifact.abi,
+      contractAddress.Agreement,
+      AgreementArtifact.abi,
       this._provider.getSigner(0)
     );
   }
 
-  // The next to methods are needed to start and stop polling data. While
-  // the data being polled here is specific to this example, you can use this
-  // pattern to read any data from your contracts.
-  //
-  // Note that if you don't need it to update in near real time, you probably
-  // don't need to poll it. If that's the case, you can just fetch it when you
-  // initialize the app, as we do with the token data.
-  _startPollingData() {
-    this._pollDataInterval = setInterval(() => this._updateBalance(), 1000);
-
-    // We run it once immediately so we don't have to wait for it
-    this._updateBalance();
-  }
-
-  _stopPollingData() {
-    clearInterval(this._pollDataInterval);
-    this._pollDataInterval = undefined;
-  }
-
-  _minifyHash(address) {
-    if (!address) return
-    const hashStart = address.substring(0, 6)
-    const hashEnd = address.substring(address.length-4, address.length)
-
-    return `${hashStart}...${hashEnd}`
-  }
-
-  // The next two methods just read from the contract and store the results
-  // in the component state.
   async _getTokenData() {
     const name = await this._token.name();
     const symbol = await this._token.symbol();
@@ -174,9 +131,23 @@ export class Dapp extends React.Component {
     this.setState({ tokenData: { name, symbol } });
   }
 
+  async _fetchAccounts() {
+    const adminAddress = await this._agreement.owner();
+    const totalAccounts = await this._agreement.totalAccounts();
+    const optedInAccounts = await this._agreement.fetchOptedInAccounts();
+    const optedOutAccounts = await this._agreement.fetchOptedOutAccounts();
+
+    this.setState({
+      adminAddress: ethers.utils.getAddress(adminAddress),
+      optedInAccounts: optedInAccounts,
+      optedOutAccounts: optedOutAccounts,
+      totalAccounts: totalAccounts.toNumber()
+    });
+  }
+
   async _addMembers() {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const contract = new ethers.Contract(contractAddress.EBOGAgreement, EBOGAgreementArtifact.abi, provider.getSigner());
+    const contract = new ethers.Contract(contractAddress.Agreement, AgreementArtifact.abi, provider.getSigner());
 
     try {
       const transaction = await contract.addMembers(MEMBERS);
@@ -193,24 +164,12 @@ export class Dapp extends React.Component {
     }
   }
 
-  async _fetchAccounts() {
-    const totalAccounts = await this._agreement.totalAccounts();
-    const optInAccounts = await this._agreement.fetchOptInAccounts();
-    const optOutAccounts = await this._agreement.fetchOptOutAccounts();
-
-    this.setState({
-      optInAccounts: optInAccounts,
-      optOutAccounts: optOutAccounts,
-      totalAccounts: totalAccounts.toNumber()
-    });
-  }
-
   async _optIn() {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const contract = new ethers.Contract(contractAddress.EBOGAgreement, EBOGAgreementArtifact.abi, provider.getSigner());
+    const contract = new ethers.Contract(contractAddress.Agreement, AgreementArtifact.abi, provider.getSigner());
 
     try {
-      const transaction = await contract.optIntoEBOG();
+      const transaction = await contract.optInToDAO();
       this.setState({ txBeingSent: transaction.hash });
 
       await transaction.wait()
@@ -226,10 +185,10 @@ export class Dapp extends React.Component {
 
   async _optOut() {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const contract = new ethers.Contract(contractAddress.EBOGAgreement, EBOGAgreementArtifact.abi, provider.getSigner());
+    const contract = new ethers.Contract(contractAddress.Agreement, AgreementArtifact.abi, provider.getSigner());
 
     try {
-      const transaction = await contract.optOutOfEBOG();
+      const transaction = await contract.optOutOfDAO();
       this.setState({ txBeingSent: transaction.hash });
 
       await transaction.wait()
@@ -242,9 +201,12 @@ export class Dapp extends React.Component {
     }
   }
 
-  async _updateBalance() {
-    const balance = await this._token.balanceOf(this.state.selectedAddress);
-    this.setState({ balance });
+  _minifyHash(address) {
+    if (!address) return
+    const hashStart = address.substring(0, 6)
+    const hashEnd = address.substring(address.length-4, address.length)
+
+    return `${hashStart}...${hashEnd}`
   }
 
   // This method sends an ethereum transaction to transfer tokens.
@@ -307,6 +269,10 @@ export class Dapp extends React.Component {
     }
   }
 
+  _resetState() {
+    this.setState(this.initialState);
+  }
+
   _dismissTransactionError() {
     this.setState({ transactionError: undefined });
   }
@@ -321,10 +287,6 @@ export class Dapp extends React.Component {
     }
 
     return error.message;
-  }
-
-  _resetState() {
-    this.setState(this.initialState);
   }
 
   _checkNetwork() {
@@ -365,14 +327,20 @@ export class Dapp extends React.Component {
 
     // If the token data or the user's balance hasn't loaded yet, we show
     // a loading component.
-    if (!this.state.tokenData || !this.state.balance) {
+    if (!this.state.tokenData) {
       return <Loading />;
     }
 
     // If everything is loaded, we render the application.
     return (
       <Router>
-        <Navigation/>
+        <Navigation
+          connectWallet={() => this._connectWallet()}
+          dismiss={() => this._dismissNetworkError()}
+          minifyHash={this._minifyHash}
+          networkError={this.state.networkError}
+          selectedAddress={this.state.selectedAddress}
+        />
         <div className="row">
           <div className="col-10 offset-1">
             {this.state.txBeingSent && (
@@ -393,16 +361,23 @@ export class Dapp extends React.Component {
               />
             </Route>
             <Route path="/agreement">
-              <Agreement
-                addMembers={() => this._addMembers()}
-                minifyHash={() => this._minifyHash()}
-                optIn={() => this._optIn()}
-                optInAccounts={this.state.optInAccounts}
-                optOut={() => this._optOut()}
-                optOutAccounts={this.state.optOutAccounts}
-                selectedAddress={this._minifyHash(this.state.selectedAddress)}
-                totalAccounts={this.state.totalAccounts}
-              />
+              <Container className="my-4 p-4">
+                <Agreement
+                  minifyHash={this._minifyHash}
+                  optIn={() => this._optIn()}
+                  optOut={() => this._optOut()}
+                  selectedAddress={this.state.selectedAddress}
+                />
+                <Member
+                  addMembers={() => this._addMembers()}
+                  adminAddress={this.state.adminAddress}
+                  minifyHash={this._minifyHash}
+                  optedInAccounts={this.state.optedInAccounts}
+                  optedOutAccounts={this.state.optedOutAccounts}
+                  selectedAddress={this.state.selectedAddress}
+                  totalAccounts={this.state.totalAccounts}
+                />
+              </Container>
             </Route>
           </Switch>
         </div>

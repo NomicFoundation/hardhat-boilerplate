@@ -1,0 +1,136 @@
+$baby-blue: #1B9AAA;
+$black: #050505;
+$white : #fff;
+
+#dapp {
+  min-height: calc(100vh - 250px);
+}
+
+.navbar {
+  background-color: $black;
+}
+
+.logo,
+.stamp {
+  width: 60px;
+  height: auto;
+}
+
+.nav-link {
+  font-weight: bold;
+  color: $white !important;
+  text-transform: uppercase;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+button.navbar-toggler {
+  background-color: $white;
+}
+
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.agreement-text {
+  line-height: 2;
+  font-family: "American Typewriter", serif;
+}
+
+.paper-stack {
+  background: #f5f1e3;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  margin: 26px auto 0;
+  max-width: 950px;
+  min-height: 300px;
+  padding: 24px;
+  position: relative;
+  width: 80%;
+}
+
+.paper-stack:before,
+.paper-stack:after {
+  content: "";
+  height: 98%;
+  position: absolute;
+  width: 100%;
+  z-index: -1;
+}
+
+.paper-stack:before {
+  background: #f5f1e3;
+  box-shadow: 0 0 8px rgba(0,0,0,0.2);
+  left: -5px;
+  top: 4px;
+  transform: rotate(-2.5deg);
+}
+
+.paper-stack:after {
+  background: #f5f1e3;
+  box-shadow: 0 0 3px rgba(0,0,0,0.2);
+  right: -3px;
+  top: 1px;
+  transform: rotate(1.4deg);
+}
+
+.footer {
+  height: 150px;
+  vertical-align: center;
+  background-color: $black;
+}
+
+.footer-text {
+  color: $white;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.social-icon {
+  color: $baby-blue;
+}
+
+.social-icon:hover {
+  color: $white;
+}
+
+.ethereum-icon {
+  font-size: 36px;
+}
+
+@media (max-width: 547px) {
+  h1.agreement-text {
+    font-size: 30px;
+    line-height: 1.5;
+  }
+
+  h5.agreement-text,
+  b.agreement-text {
+    font-size: 20px;
+  }
+
+  p.agreement-text,
+  li.agreement-text {
+    font-size: 14px;
+  }
+
+  a.social-icon {
+    padding-right: 0.5rem !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .stamp {
+    display: grid;
+    margin: 0 auto;
+  }
+
+  .paper-stack {
+    max-width: 550px;
+    width: 95%;
+  }
+}

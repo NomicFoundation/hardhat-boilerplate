@@ -2,7 +2,7 @@ import React from "react";
 
 export function TransactionErrorMessage({ message, dismiss }) {
   return (
-    <div className="alert alert-danger" role="alert">
+    <div className="alert alert-danger text-center mt-3" role="alert">
       Error sending transaction: {message.substring(0, 150)}
       <button
         type="button"
