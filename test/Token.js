@@ -42,9 +42,6 @@ describe("Token contract", function () {
     // mined.
     hardhatToken = await Token.deploy();
     await hardhatToken.deployed();
-
-    // We can interact with the contract by calling `hardhatToken.method()`
-    await hardhatToken.deployed();
   });
 
   // You can nest describe calls to create subsections.
@@ -57,6 +54,7 @@ describe("Token contract", function () {
       // Expect receives a value, and wraps it in an assertion objet. These
       // objects have a lot of utility methods to assert values.
 
+      // We can interact with the contract by calling `hardhatToken.method()`
       // This test expects the owner variable stored in the contract to be equal
       // to our Signer's owner.
       expect(await hardhatToken.owner()).to.equal(owner.address);
