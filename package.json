@@ -32,5 +32,9 @@
     "ethers": "^5.0.0",
     "hardhat": "^2.0.4",
     "husky": "^4.2.5"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.3.0",
+    "openzeppelin-solidity": "^4.3.0"
   }
 }
