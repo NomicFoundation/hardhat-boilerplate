@@ -19,3 +19,25 @@ Submitted for verification at Etherscan.io on
 
 https://kovan.infura.io/v3/222c051f43234109894f69a042bb2539
 npx hardhat verify --network kovan 0xf94576bddc0889d837735eab13d7622fef1ddddc
+
+
+
+
+
+
+ npx hardhat --network kovan run scripts/deploy.js
+ Compilation finished successfully
+Deploying the contracts with the account: 0x4b7b6fA91148ADcD31b6999AC2DC85694ac05803
+Account balance: 963226263490690165
+Token address: 0xF75DBD2aFf9adC6486638C4f4C41C1F80b0e7fb7
+npx hardhat verify --network kovan <Token address>
+
+npx hardhat --network bsctestnet run scripts/deploy.js
+npx hardhat verify --network bsctestnet 0x1B26747E58A7B62E43bb76EE6a26b49cC1Acf26E
+
+Successfully submitted source code for contract
+contracts/Token.sol:Token at 0x1B26747E58A7B62E43bb76EE6a26b49cC1Acf26E
+for verification on Etherscan. Waiting for verification result...
+
+Successfully verified contract Token on Etherscan.
+https://testnet.bscscan.com/address/0x1B26747E58A7B62E43bb76EE6a26b49cC1Acf26E#code
