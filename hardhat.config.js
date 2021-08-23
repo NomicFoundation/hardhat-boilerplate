@@ -8,14 +8,14 @@ require("@nomiclabs/hardhat-etherscan");
 require("./tasks/faucet");
 
 
-
+const INFURA_URL = 'https://kovan.infura.io/v3/${INFURA_API_KEY}';
 const { INFURA_API_KEY, mnemonic, privateKey1, privateKey2, etherApiKey } = require('./secrets.json');
 
 module.exports = {
   etherscan: {
     // Your API key for Etherscan
     // Obtain one at https://etherscan.io/
-    apiKey: ""
+    apiKey: [etherApiKey]
   },
   networkderfu: "koven",
   networks: {
