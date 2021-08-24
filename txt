@@ -1,0 +1,21 @@
+//"privateKey1": "f627ae19377964d202d01ceb7479555345f0d2bea0124ee7e241eb9d3305a178",
+//"privateKey2": "c8add2b26fe06725e8cba1f2803f367c132db2d2f2e6c666787964d6f7afd071",
+//"account1": "0x4b7b6fA91148ADcD31b6999AC2DC85694ac05803",
+//"account2": "0xAAEcadC8F35a8e095198B7F1917060A2aD6FEF83",
+
+testnet koven
+
+Compilation finished successfully
+Deploying the contracts with the account: 0x4b7b6fA91148ADcD31b6999AC2DC85694ac05803
+Account balance: 969912372000000000
+Token address: 0xF94576bDDC0889D837735Eab13d7622FeF1DdDDC
+
+pragma solidity =0.5.16;
+
+pragma experimental ABIEncoderV2;
+
+Submitted for verification at Etherscan.io on 2021.06.04
+Submitted for verification at Etherscan.io on
+
+https://kovan.infura.io/v3/222c051f43234109894f69a042bb2539
+npx hardhat verify --network kovan 0xf94576bddc0889d837735eab13d7622fef1ddddc

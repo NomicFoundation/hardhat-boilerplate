@@ -65,16 +65,15 @@ Your environment will have everything you need to build a Dapp powered by Hardha
 
 ```sh
 module.exports = {
-solidity: {
-compilers: [
-{
-version: "0.5.5",
-},
-{
-version: "0.6.7",
-settings: {},
-},
-],
-},
+    solidity: {
+              compilers: [
+              {
+  version: "0.5.5",},
+              {
+            version: "0.6.7",
+            settings: {},
+              },
+              ],
+    },
 };
 ```

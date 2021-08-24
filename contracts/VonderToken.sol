@@ -1,6 +1,11 @@
 // SPDX-License-Identifier: MIT
+
+<<<<<<< HEAD:contracts/VonderToken.sol
 pragma solidity >=0.5.16 <0.8.0;
+=======
+pragma solidity ^0.5.16;
 pragma experimental ABIEncoderV2;
+>>>>>>> parent of 4d2a9d7 (**):contracts/Token.sol
 
 // From https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/math/Math.sol
 // Subject to the MIT license.
@@ -187,18 +192,18 @@ library SafeMath {
     }
 }
 
-contract Token {
+contract VonderToken {
     /// @notice EIP-20 token name for this token
-    string public constant name = "Vonder Token";
+    string public constant name = "Shitty Token";
 
     /// @notice EIP-20 token symbol for this token
-    string public constant symbol = "Von";
+    string public constant symbol = "SHT";
 
     /// @notice EIP-20 token decimals for this token
     uint8 public constant decimals = 18;
 
     /// @notice Total number of tokens in circulation
-    uint public totalSupply = 100_000_000_000e18; // 1 billion Uni
+    uint public totalSupply = 1_000_000_000e18; // 1 billion Uni
 
     /// @notice Address which may mint new tokens
     address public minter;
@@ -266,7 +271,7 @@ contract Token {
 
 
     /**
-     * @notice Construct a new PSU token
+     * @notice Construct a new VonderToken
       */
     // constructor(address account, address minter_, uint mintingAllowedAfter_) public {
     constructor() public {
