@@ -41,7 +41,6 @@ describe("Token contract", function () {
     // for it to be deployed(), which happens onces its transaction has been
     // mined.
     hardhatToken = await Token.deploy();
-    await hardhatToken.deployed();
 
     // We can interact with the contract by calling `hardhatToken.method()`
     await hardhatToken.deployed();
