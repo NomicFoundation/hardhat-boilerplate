@@ -86,4 +86,4 @@ this repository or [our Discord server](https://invite.gg/HardhatSupport).
 
 Also you can [follow us on Twitter](https://twitter.com/HardhatHQ).
 
-**Happy _buidling_!**
+**Happy _building_!**

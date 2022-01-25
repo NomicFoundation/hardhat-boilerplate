@@ -111,7 +111,7 @@ export class Dapp extends React.Component {
         <div className="row">
           <div className="col-12">
             {/* 
-              Sending a transaction isn't an immidiate action. You have to wait
+              Sending a transaction isn't an immediate action. You have to wait
               for it to be mined.
               If we are waiting for one, we show a message here.
             */}
@@ -135,7 +135,7 @@ export class Dapp extends React.Component {
         <div className="row">
           <div className="col-12">
             {/*
-              If the user has no tokens, we don't show the Tranfer form
+              If the user has no tokens, we don't show the Transfer form
             */}
             {this.state.balance.eq(0) && (
               <NoTokensMessage selectedAddress={this.state.selectedAddress} />
@@ -218,12 +218,12 @@ export class Dapp extends React.Component {
 
     // Fetching the token data and the user's balance are specific to this
     // sample project, but you can reuse the same initialization pattern.
-    this._intializeEthers();
+    this._initializeEthers();
     this._getTokenData();
     this._startPollingData();
   }
 
-  async _intializeEthers() {
+  async _initializeEthers() {
     // We first initialize ethers by creating a provider using window.ethereum
     this._provider = new ethers.providers.Web3Provider(window.ethereum);
 
