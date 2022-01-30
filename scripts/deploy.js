@@ -10,7 +10,7 @@ async function main() {
     );
   }
 
-  // ethers is avaialble in the global scope
+  // ethers is available in the global scope
   const [deployer] = await ethers.getSigners();
   console.log(
     "Deploying the contracts with the account:",
