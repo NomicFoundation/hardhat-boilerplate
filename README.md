@@ -56,7 +56,7 @@ You can find detailed instructions on using this repository and many tips in [it
 - [Project description (Token.sol)](https://hardhat.org/tutorial/writing-and-compiling-contracts/)
 - [Setting up the environment](https://hardhat.org/tutorial/setting-up-the-environment/)
 - [Testing with Hardhat, Mocha and Waffle](https://hardhat.org/tutorial/testing-contracts/)
-- [Setting up Metamask](https://hardhat.org/tutorial/hackathon-boilerplate-project.html#how-to-use-it/)
+- [Setting up Metamask](https://hardhat.org/tutorial/hackathon-boilerplate-project.html#how-to-use-it)
 - [Hardhat's full documentation](https://hardhat.org/getting-started/)
 
 For a complete introduction to Hardhat, refer to [this guide](https://hardhat.org/getting-started/#overview).
