@@ -53,7 +53,7 @@ need to have [Metamask](https://metamask.io) installed and listening to
 
 You can find detailed instructions on using this repository and many tips in [its documentation](https://hardhat.org/tutorial).
 
-- [Project description (Token.sol)](https://hardhat.org/tutorial/writing-and-compiling-contracts/)
+- [Writing and compiling contracts](https://hardhat.org/tutorial/writing-and-compiling-contracts/)
 - [Setting up the environment](https://hardhat.org/tutorial/setting-up-the-environment/)
 - [Testing Contracts](https://hardhat.org/tutorial/testing-contracts/)
 - [Setting up Metamask](https://hardhat.org/tutorial/hackathon-boilerplate-project.html#how-to-use-it)
