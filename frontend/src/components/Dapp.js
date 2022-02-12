@@ -174,7 +174,7 @@ export class Dapp extends React.Component {
 
     // To connect to the user's wallet, we have to run this method.
     // It returns a promise that will resolve to the user's address.
-    const [selectedAddress] = await window.ethereum.enable();
+    const [selectedAddress] = await window.ethereum.request({ method: 'eth_requestAccounts' });
 
     // Once we have the address, we can initialize the application.
 
@@ -200,7 +200,7 @@ export class Dapp extends React.Component {
     });
     
     // We reset the dapp state if the network is changed
-    window.ethereum.on("networkChanged", ([networkId]) => {
+    window.ethereum.on("chainChanged", ([networkId]) => {
       this._stopPollingData();
       this._resetState();
     });
