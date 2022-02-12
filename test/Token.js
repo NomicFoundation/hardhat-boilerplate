@@ -1,4 +1,4 @@
-// This is an exmaple test file. Hardhat will run every *.js file in `test/`,
+// This is an example test file. Hardhat will run every *.js file in `test/`,
 // so feel free to add new ones.
 
 // Hardhat tests are normally written with Mocha and Chai.
@@ -10,12 +10,12 @@ const { expect } = require("chai");
 // not actually needed, but having your tests organized makes debugging them
 // easier. All Mocha functions are available in the global scope.
 
-// `describe` recieves the name of a section of your test suite, and a callback.
+// `describe` receives the name of a section of your test suite, and a callback.
 // The callback must define the tests of that section. This callback can't be
 // an async function.
 describe("Token contract", function () {
   // Mocha has four functions that let you hook into the the test runner's
-  // lifecyle. These are: `before`, `beforeEach`, `after`, `afterEach`.
+  // lifecycle. These are: `before`, `beforeEach`, `after`, `afterEach`.
 
   // They're very useful to setup the environment for tests, and to clean it
   // up after they run.
