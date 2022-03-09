@@ -1,9 +1,17 @@
-import React from "react";
+import { MouseEventHandler } from "react";
 
-export function NetworkErrorMessage({ message, dismiss }) {
+export interface ErrorMessageProps {
+  message: string;
+  dismiss: MouseEventHandler<HTMLButtonElement>;
+}
+
+export function TransactionErrorMessage({
+  message,
+  dismiss,
+}: ErrorMessageProps) {
   return (
     <div className="alert alert-danger" role="alert">
-      {message}
+      Error sending transaction: {message.substring(0, 100)}
       <button
         type="button"
         className="close"

@@ -1,4 +1,4 @@
-# Hardhat Hackathon Boilerplate
+# Hardhat Hackathon Boilerplate - TypeScript
 
 This repository contains a sample project that you can use as the starting point
 for your Ethereum project. It's also a great fit for learning the basics of
@@ -15,7 +15,7 @@ The first things you need to do are cloning this repository and installing its
 dependencies:
 
 ```sh
-git clone https://github.com/nomiclabs/hardhat-hackathon-boilerplate.git
+git clone -b typescript https://github.com/nomiclabs/hardhat-hackathon-boilerplate.git
 cd hardhat-hackathon-boilerplate
 npm install
 ```
@@ -30,7 +30,7 @@ Then, on a new terminal, go to the repository's root folder and run this to
 deploy your contract:
 
 ```sh
-npx hardhat run scripts/deploy.js --network localhost
+npx hardhat run scripts/deploy.ts --network localhost
 ```
 
 Finally, we can run the frontend with:
@@ -41,7 +41,7 @@ npm install
 npm start
 ```
 
-> Note: There's [an issue in `ganache-core`](https://github.com/trufflesuite/ganache-core/issues/650) that can make the `npm install` step fail. 
+> Note: There's [an issue in `ganache-core`](https://github.com/trufflesuite/ganache-core/issues/650) that can make the `npm install` step fail.
 >
 > If you see `npm ERR! code ENOLOCAL`, try running `npm ci` instead of `npm install`.
 

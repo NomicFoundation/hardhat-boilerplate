@@ -1,5 +1,3 @@
-import React from "react";
-
 export function NoWalletDetected() {
   return (
     <div className="container">

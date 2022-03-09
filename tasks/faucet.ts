@@ -1,4 +1,9 @@
-const fs = require("fs");
+/* eslint-disable node/no-unpublished-import */
+import fs from "fs";
+import path from "path";
+
+import { task } from "hardhat/config";
+import "@nomiclabs/hardhat-waffle";
 
 // This file is only here to make interacting with the Dapp easier,
 // feel free to ignore it if you don't need it.
@@ -6,6 +11,7 @@ const fs = require("fs");
 task("faucet", "Sends ETH and tokens to an address")
   .addPositionalParam("receiver", "The address that will receive them")
   .setAction(async ({ receiver }, { ethers }) => {
+    const network = await ethers.getDefaultProvider().getNetwork();
     if (network.name === "hardhat") {
       console.warn(
         "You are running the faucet task with Hardhat network, which" +
@@ -14,16 +20,17 @@ task("faucet", "Sends ETH and tokens to an address")
       );
     }
 
-    const addressesFile =
-      __dirname + "/../frontend/src/contracts/contract-address.json";
-
+    const addressesFile = path.join(
+      __dirname,
+      "/../frontend/src/contracts/contract-address.json"
+    );
     if (!fs.existsSync(addressesFile)) {
       console.error("You need to deploy your contract first");
       return;
     }
 
     const addressJson = fs.readFileSync(addressesFile);
-    const address = JSON.parse(addressJson);
+    const address = JSON.parse(addressJson.toString());
 
     if ((await ethers.provider.getCode(address.Token)) === "0x") {
       console.error("You need to deploy your contract first");

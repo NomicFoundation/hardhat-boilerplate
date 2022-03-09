@@ -1,3 +1,13 @@
+/* eslint-disable no-process-exit */
+// We require the Hardhat Runtime Environment explicitly here. This is optional
+// but useful for running the script in a standalone fashion through `node <script>`.
+//
+// When running the script with `npx hardhat run <script>` you'll find the Hardhat
+// Runtime Environment's members available in the global scope.
+import { Contract } from "ethers";
+import { ethers, network, artifacts } from "hardhat";
+import * as path from "path";
+
 // This is a script for deploying your contracts. You can adapt it to deploy
 // yours, or create new ones.
 async function main() {
@@ -29,9 +39,9 @@ async function main() {
   saveFrontendFiles(token);
 }
 
-function saveFrontendFiles(token) {
+function saveFrontendFiles(token: Contract) {
   const fs = require("fs");
-  const contractsDir = __dirname + "/../frontend/src/contracts";
+  const contractsDir = path.join(__dirname, "/../frontend/src/contracts");
 
   if (!fs.existsSync(contractsDir)) {
     fs.mkdirSync(contractsDir);
