@@ -99,35 +99,5 @@ describe("Token contract", function () {
         initialOwnerBalance
       );
     });
-
-    it("Should update balances after transfers", async function () {
-      const { hardhatToken, owner, addr1, addr2 } = await loadFixture(deployToken);
-
-      const initialOwnerBalance = await hardhatToken.balanceOf(
-        owner.address
-      );
-
-      // Transfer 100 tokens from owner to addr1.
-      await hardhatToken.transfer(addr1.address, 100);
-
-      // Transfer another 50 tokens from owner to addr2.
-      await hardhatToken.transfer(addr2.address, 50);
-
-      // Check balances.
-      const finalOwnerBalance = await hardhatToken.balanceOf(
-        owner.address
-      );
-      expect(finalOwnerBalance).to.equal(initialOwnerBalance - 150);
-
-      const addr1Balance = await hardhatToken.balanceOf(
-        addr1.address
-      );
-      expect(addr1Balance).to.equal(100);
-
-      const addr2Balance = await hardhatToken.balanceOf(
-        addr2.address
-      );
-      expect(addr2Balance).to.equal(50);
-    });
   });
 });
