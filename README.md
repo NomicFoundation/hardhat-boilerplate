@@ -1,4 +1,4 @@
-# Hardhat Hackathon Boilerplate
+# Hardhat Boilerplate
 
 This repository contains a sample project that you can use as the starting point
 for your Ethereum project. It's also a great fit for learning the basics of
@@ -15,8 +15,8 @@ The first things you need to do are cloning this repository and installing its
 dependencies:
 
 ```sh
-git clone https://github.com/nomiclabs/hardhat-hackathon-boilerplate.git
-cd hardhat-hackathon-boilerplate
+git clone https://github.com/nomiclabs/hardhat-boilerplate.git
+cd hardhat-boilerplate
 npm install
 ```
 
@@ -56,7 +56,7 @@ You can find detailed instructions on using this repository and many tips in [it
 - [Writing and compiling contracts](https://hardhat.org/tutorial/writing-and-compiling-contracts/)
 - [Setting up the environment](https://hardhat.org/tutorial/setting-up-the-environment/)
 - [Testing Contracts](https://hardhat.org/tutorial/testing-contracts/)
-- [Setting up Metamask](https://hardhat.org/tutorial/hackathon-boilerplate-project.html#how-to-use-it)
+- [Setting up Metamask](https://hardhat.org/tutorial/boilerplate-project#how-to-use-it)
 - [Hardhat's full documentation](https://hardhat.org/getting-started/)
 
 For a complete introduction to Hardhat, refer to [this guide](https://hardhat.org/getting-started/#overview).
