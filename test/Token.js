@@ -6,6 +6,9 @@
 // We import Chai to use its asserting functions here.
 const { expect } = require("chai");
 
+// We use `loadFixture` as an alternative to Mocha's `beforeEach` because
+// `loadFixture` takes advantage of Hardhat Network's snapshot functionality in
+// order to avoid redeploying the contract for every test run.
 const { loadFixture } = require("@nomicfoundation/hardhat-network-helpers");
 
 // `describe` is a Mocha function that allows you to organize your tests. It's
@@ -20,14 +23,15 @@ describe("Token contract", function () {
   // lifecycle. These are: `before`, `beforeEach`, `after`, `afterEach`.
 
   // They're very useful to setup the environment for tests, and to clean it
-  // up after they run.
+  // up after they run. However, we use a Hardhat-specific pattern here:
 
-  // The recommended pattern is to declare some variables, and assign them in a "fixture" function.
-
+  // The recommended pattern is to provide a "fixture" function, to be used as
+  // an argument to `loadFixture`, which will call it to initialize the chain
+  // state and then return an object with any information that tests will need.
   async function deployToken() {
     // Get the ContractFactory and Signers here.
     const Token = await ethers.getContractFactory("Token");
-    const [owner, addr1, addr2, ...addrs] = await ethers.getSigners();
+    const [owner, addr1, addr2] = await ethers.getSigners();
 
     // To deploy our contract, we just have to call Token.deploy() and await
     // for it to be deployed(), which happens onces its transaction has been
@@ -37,7 +41,7 @@ describe("Token contract", function () {
     // We can interact with the contract by calling `hardhatToken.method()`
     await hardhatToken.deployed();
 
-    return { Token, hardhatToken, owner, addr1, addr2, addrs };
+    return { Token, hardhatToken, owner, addr1, addr2 };
   }
 
   // You can nest describe calls to create subsections.
