@@ -24,12 +24,11 @@
   },
   "homepage": "https://github.com/nomiclabs/hardhat-hackathon-boilerplate#readme",
   "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^1.0.0-beta.0",
     "@nomiclabs/hardhat-ethers": "^2.0.2",
-    "@nomiclabs/hardhat-waffle": "^2.0.1",
     "chai": "^4.2.0",
-    "ethereum-waffle": "^3.1.1",
     "ethers": "^5.0.0",
-    "hardhat": "^2.3.0",
+    "hardhat": "^2.9.9",
     "husky": "^4.2.5"
   }
 }
