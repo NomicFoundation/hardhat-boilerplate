@@ -29,11 +29,10 @@ You can use the `Dapp` component as a starting point for your project. It has
 comments explaining each part of its code, and indicating what's specific to
 this project, and what can be reused.
 
-## Feedback, help and news
+## Getting help and news about Hardhat
 
-Feel free to reach us through this repository or
-[our Discord server](https://invite.gg/HardhatSupport).
+If you need help with this project or with Hardhat in general, please read [this guide](https://hardhat.org/hardhat-runner/docs/guides/getting-help) to learn where and how to get it.
 
-Also you can [follow us on Twitter](https://twitter.com/HardhatHQ).
+[Follow us on Twitter](https://twitter.com/HardhatHQ) to get the latest news about Hardhat, and don't forget to star [our GitHub repository](https://github.com/NomicFoundation/hardhat)!
 
 **Happy _building_!**
