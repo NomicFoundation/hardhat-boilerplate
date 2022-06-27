@@ -52,6 +52,7 @@ describe("Token contract", function () {
 
     // If the callback function is async, Mocha will `await` it.
     it("Should set the right owner", async function () {
+      // We use loadFixture to setup our environment, and then assert that things went well
       const { hardhatToken, owner } = await loadFixture(deployToken);
       // Expect receives a value, and wraps it in an assertion objet. These
       // objects have a lot of utility methods to assert values.
