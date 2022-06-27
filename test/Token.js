@@ -28,7 +28,7 @@ describe("Token contract", function () {
   // The recommended pattern is to provide a "fixture" function, to be used as
   // an argument to `loadFixture`, which will call it to initialize the chain
   // state and then return an object with any information that tests will need.
-  async function deployToken() {
+  async function deployTokenFixture() {
     // Get the ContractFactory and Signers here.
     const Token = await ethers.getContractFactory("Token");
     const [owner, addr1, addr2] = await ethers.getSigners();
@@ -53,7 +53,7 @@ describe("Token contract", function () {
     // If the callback function is async, Mocha will `await` it.
     it("Should set the right owner", async function () {
       // We use loadFixture to setup our environment, and then assert that things went well
-      const { hardhatToken, owner } = await loadFixture(deployToken);
+      const { hardhatToken, owner } = await loadFixture(deployTokenFixture);
       // Expect receives a value, and wraps it in an assertion objet. These
       // objects have a lot of utility methods to assert values.
 
@@ -63,7 +63,7 @@ describe("Token contract", function () {
     });
 
     it("Should assign the total supply of tokens to the owner", async function () {
-      const { hardhatToken, owner } = await loadFixture(deployToken);
+      const { hardhatToken, owner } = await loadFixture(deployTokenFixture);
       const ownerBalance = await hardhatToken.balanceOf(owner.address);
       expect(await hardhatToken.totalSupply()).to.equal(ownerBalance);
     });
@@ -71,7 +71,7 @@ describe("Token contract", function () {
 
   describe("Transactions", function () {
     it("Should transfer tokens between accounts", async function () {
-      const { hardhatToken, owner, addr1, addr2 } = await loadFixture(deployToken);
+      const { hardhatToken, owner, addr1, addr2 } = await loadFixture(deployTokenFixture);
       // Transfer 50 tokens from owner to addr1
       await expect(hardhatToken.transfer(addr1.address, 50))
         .to.emit(hardhatToken, "Transfer").withArgs(addr1, 50)
@@ -85,7 +85,7 @@ describe("Token contract", function () {
     });
 
     it("Should fail if sender doesn’t have enough tokens", async function () {
-      const { hardhatToken, owner, addr1 } = await loadFixture(deployToken);
+      const { hardhatToken, owner, addr1 } = await loadFixture(deployTokenFixture);
       const initialOwnerBalance = await hardhatToken.balanceOf(
         owner.address
       );
