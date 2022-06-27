@@ -19,12 +19,6 @@ const { loadFixture } = require("@nomicfoundation/hardhat-network-helpers");
 // The callback must define the tests of that section. This callback can't be
 // an async function.
 describe("Token contract", function () {
-  // Mocha has four functions that let you hook into the the test runner's
-  // lifecycle. These are: `before`, `beforeEach`, `after`, `afterEach`.
-
-  // They're very useful to setup the environment for tests, and to clean it
-  // up after they run. However, we use a Hardhat-specific pattern here:
-
   // We define a fixture to reuse the same setup in every test.
   // We use loadFixture to run this setup once, snapshot that state,
   // and reset Hardhat Network to that snapshopt in every test.

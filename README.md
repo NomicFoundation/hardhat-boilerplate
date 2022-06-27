@@ -41,10 +41,6 @@ npm install
 npm start
 ```
 
-> Note: There's [an issue in `ganache-core`](https://github.com/trufflesuite/ganache-core/issues/650) that can make the `npm install` step fail. 
->
-> If you see `npm ERR! code ENOLOCAL`, try running `npm ci` instead of `npm install`.
-
 Open [http://localhost:3000/](http://localhost:3000/) to see your Dapp. You will
 need to have [Metamask](https://metamask.io) installed and listening to
 `localhost 8545`.
@@ -63,14 +59,17 @@ For a complete introduction to Hardhat, refer to [this guide](https://hardhat.or
 
 ## What’s Included?
 
+This repository uses our recommended hardhat setup, by using our [`@nomicfoundation/hardhat-toolbox`](https://hardhat.org/hardhat-runner/plugins/nomicfoundation-hardhat-toolbox). When you use this plugin, you'll be able to:
 Your environment will have everything you need to build a Dapp powered by Hardhat and React.
 
-- [Hardhat](https://hardhat.org/): An Ethereum development task runner and testing network.
-- [Mocha](https://mochajs.org/): A JavaScript test runner.
-- [Chai](https://www.chaijs.com/): A JavaScript assertion library.
-- [ethers.js](https://docs.ethers.io/v5/): A JavaScript library for interacting with Ethereum.
-- [Waffle](https://github.com/EthWorks/Waffle/): To have Ethereum-specific Chai assertions/mathers.
-- [A sample frontend/Dapp](./frontend): A Dapp which uses [Create React App](https://github.com/facebook/create-react-app).
+- Deploy and interact with your contracts using [ethers.js](https://docs.ethers.io/v5/) and the [`hardhat-ethers`](https://hardhat.org/hardhat-runner/plugins/nomiclabs-hardhat-ethers) plugin.
+- Test your contracts with [Mocha](https://mochajs.org/), [Chai](https://chaijs.com/) and our own [Hardhat Chai Matchers](https://hardhat.org/hardhat-chai-matchers) plugin.
+- Interact with Hardhat Network with our [Hardhat Network Helpers](https://hardhat.org/hardhat-network-helpers).
+- Verify the source code of your contracts with the [hardhat-etherscan](https://hardhat.org/hardhat-runner/plugins/nomiclabs-hardhat-etherscan) plugin.
+- Get metrics on the gas used by your contracts with the [hardhat-gas-reporter](https://github.com/cgewecke/hardhat-gas-reporter) plugin.
+- Measure your tests coverage with [solidity-coverage](https://github.com/sc-forks/solidity-coverage).
+
+This project also includes [a sample frontend/Dapp](./frontend), which uses [Create React App](https://github.com/facebook/create-react-app).
 
 ## Troubleshooting
 
@@ -79,11 +78,14 @@ Your environment will have everything you need to build a Dapp powered by Hardha
   transaction history and also the nonce. Open Metamask, click on your account
   followed by `Settings > Advanced > Reset Account`.
 
-## Feedback, help and news
+## Setting up your editor
 
-We'd love to have your feedback on this tutorial. Feel free to reach us through
-this repository or [our Discord server](https://invite.gg/HardhatSupport).
+[Hardhat for Visual Studio Code](https://hardhat.org/hardhat-vscode) is the official Hardhat extension that adds advanced support for Solidity to VSCode. If you use Visual Studio Code, give it a try!
 
-Also you can [follow us on Twitter](https://twitter.com/HardhatHQ).
+## Getting help and updates
+
+If you need help with this project, or with Hardhat in general, please read [this guide](https://hardhat.org/hardhat-runner/docs/guides/getting-help) to learn where and how to get it.
+
+For the latest news about Hardhat, [follow us on Twitter](https://twitter.com/HardhatHQ), and don't forget to star [our GitHub repository](https://github.com/NomicFoundation/hardhat)!
 
 **Happy _building_!**
