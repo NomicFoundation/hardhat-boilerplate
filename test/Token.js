@@ -6,9 +6,9 @@
 // We import Chai to use its asserting functions here.
 const { expect } = require("chai");
 
-// We use `loadFixture` as an alternative to Mocha's `beforeEach` because
-// `loadFixture` takes advantage of Hardhat Network's snapshot functionality in
-// order to avoid redeploying the contract for every test run.
+// We use `loadFixture` to share common setups (or fixtures) between tests.
+// Using this simplifies your tests and makes them run faster, by taking advantage
+// or Hardhat Network's snapshot functionality.
 const { loadFixture } = require("@nomicfoundation/hardhat-network-helpers");
 
 // `describe` is a Mocha function that allows you to organize your tests. 
