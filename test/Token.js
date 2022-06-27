@@ -74,14 +74,25 @@ describe("Token contract", function () {
       const { hardhatToken, owner, addr1, addr2 } = await loadFixture(deployTokenFixture);
       // Transfer 50 tokens from owner to addr1
       await expect(hardhatToken.transfer(addr1.address, 50))
-        .to.emit(hardhatToken, "Transfer").withArgs(addr1, 50)
-        .and.to.changeTokenBalances(hardhatToken, [owner, addr1], [-50, 50]);
+        .to.changeTokenBalances(hardhatToken, [owner, addr1], [-50, 50]);
 
       // Transfer 50 tokens from addr1 to addr2
       // We use .connect(signer) to send a transaction from another account
       await expect(hardhatToken.connect(addr1).transfer(addr2.address, 50))
-        .to.emit(hardhatToken, "Transfer").withArgs(addr2, 50)
-        .and.to.changeTokenBalances(hardhatToken, [addr1, addr2], [-50, 50]);
+        .to.changeTokenBalances(hardhatToken, [addr1, addr2], [-50, 50]);
+    });
+
+    it("should emit Transfer events", async function () {
+      const { hardhatToken, owner, addr1, addr2 } = await loadFixture(deployTokenFixture);
+
+      // Transfer 50 tokens from owner to addr1
+      await expect(hardhatToken.transfer(addr1.address, 50))
+        .to.emit(hardhatToken, "Transfer").withArgs(owner.address, addr1.address, 50)
+
+      // Transfer 50 tokens from addr1 to addr2
+      // We use .connect(signer) to send a transaction from another account
+      await expect(hardhatToken.connect(addr1).transfer(addr2.address, 50))
+        .to.emit(hardhatToken, "Transfer").withArgs(addr1.address, addr2.address, 50)
     });
 
     it("Should fail if sender doesn’t have enough tokens", async function () {
