@@ -20,7 +20,7 @@
   "author": "Nomic Foundation",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nomiclabs/hardhat-boilerplate/issues"
+    "url": "https://github.com/NomicFoundation/hardhat-boilerplate/issues"
   },
   "homepage": "https://github.com/NomicFoundation/hardhat-boilerplate#readme",
   "devDependencies": {
