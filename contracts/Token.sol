@@ -23,7 +23,7 @@ contract Token {
     // A mapping is a key/value map. Here we store each account balance.
     mapping(address => uint256) balances;
 
-    event Transfer(address to, uint256 amount);
+    event Transfer(address indexed _from, address indexed _to, uint256 _value);
 
     /**
      * Contract initialization.
@@ -62,7 +62,7 @@ contract Token {
         balances[msg.sender] -= amount;
         balances[to] += amount;
 
-        emit Transfer(to, amount);
+        emit Transfer(msg.sender, to, amount);
     }
 
     /**
