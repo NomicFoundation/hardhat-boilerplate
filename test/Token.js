@@ -41,6 +41,7 @@ describe("Token contract", function () {
     // We can interact with the contract by calling `hardhatToken.method()`
     await hardhatToken.deployed();
 
+    // Fixtures can return anything you consider useful for your tests
     return { Token, hardhatToken, owner, addr1, addr2 };
   }
 
