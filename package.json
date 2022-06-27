@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nomiclabs/hardhat-boilerplate.git"
+    "url": "git+https://github.com/NomicFoundation/hardhat-boilerplate.git"
   },
   "keywords": [
     "hardhat",
