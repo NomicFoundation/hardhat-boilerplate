@@ -11,9 +11,9 @@ const { expect } = require("chai");
 // order to avoid redeploying the contract for every test run.
 const { loadFixture } = require("@nomicfoundation/hardhat-network-helpers");
 
-// `describe` is a Mocha function that allows you to organize your tests. It's
-// not actually needed, but having your tests organized makes debugging them
-// easier. All Mocha functions are available in the global scope.
+// `describe` is a Mocha function that allows you to organize your tests. 
+//  Having your tests organized makes debugging them easier.
+//  All Mocha functions are available in the global scope.
 
 // `describe` receives the name of a section of your test suite, and a callback.
 // The callback must define the tests of that section. This callback can't be
