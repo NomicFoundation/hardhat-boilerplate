@@ -22,7 +22,7 @@
   "bugs": {
     "url": "https://github.com/nomiclabs/hardhat-boilerplate/issues"
   },
-  "homepage": "https://github.com/nomiclabs/hardhat-boilerplate#readme",
+  "homepage": "https://github.com/NomicFoundation/hardhat-boilerplate#readme",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^1.0.0-beta.2",
     "@nomiclabs/hardhat-ethers": "^2.0.2",
