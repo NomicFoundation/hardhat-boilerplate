@@ -57,7 +57,7 @@ You can find detailed instructions on using this repository and many tips in [it
 - [Setting up the environment](https://hardhat.org/tutorial/setting-up-the-environment/)
 - [Testing Contracts](https://hardhat.org/tutorial/testing-contracts/)
 - [Setting up Metamask](https://hardhat.org/tutorial/boilerplate-project#how-to-use-it)
-- [Hardhat's full documentation](https://hardhat.org/getting-started/)
+- [Hardhat's full documentation](https://hardhat.org/docs/)
 
 For a complete introduction to Hardhat, refer to [this guide](https://hardhat.org/getting-started/#overview).
 
