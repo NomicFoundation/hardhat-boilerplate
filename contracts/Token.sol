@@ -23,6 +23,8 @@ contract Token {
     // A mapping is a key/value map. Here we store each account balance.
     mapping(address => uint256) balances;
 
+    // The Transfer event helps off-chain aplications understand
+    // what happens within your contract.
     event Transfer(address indexed _from, address indexed _to, uint256 _value);
 
     /**
