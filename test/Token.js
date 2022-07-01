@@ -48,7 +48,8 @@ describe("Token contract", function () {
       // We use loadFixture to setup our environment, and then assert that
       // things went well
       const { hardhatToken, owner } = await loadFixture(deployTokenFixture);
-      // Expect receives a value, and wraps it in an assertion objet. These
+
+      // Expect receives a value and wraps it in an assertion object. These
       // objects have a lot of utility methods to assert values.
 
       // This test expects the owner variable stored in the contract to be
