@@ -42,7 +42,7 @@ describe("Token contract", function () {
   describe("Deployment", function () {
     // `it` is another Mocha function. This is the one you use to define your
     // tests. It receives the test name, and a callback function.
-
+//
     // If the callback function is async, Mocha will `await` it.
     it("Should set the right owner", async function () {
       // We use loadFixture to setup our environment, and then assert that
