@@ -90,7 +90,7 @@ describe("Token contract", function () {
         .to.emit(hardhatToken, "Transfer").withArgs(addr1.address, addr2.address, 50)
     });
 
-    it("Should fail if sender doesn’t have enough tokens", async function () {
+    it("Should fail if sender doesn't have enough tokens", async function () {
       const { hardhatToken, owner, addr1 } = await loadFixture(deployTokenFixture);
       const initialOwnerBalance = await hardhatToken.balanceOf(
         owner.address
