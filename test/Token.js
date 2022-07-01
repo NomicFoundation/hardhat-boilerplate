@@ -51,7 +51,7 @@ describe("Token contract", function () {
 
       // Expect receives a value and wraps it in an assertion object. These
       // objects have a lot of utility methods to assert values.
-
+//
       // This test expects the owner variable stored in the contract to be
       // equal to our Signer's owner.
       expect(await hardhatToken.owner()).to.equal(owner.address);
