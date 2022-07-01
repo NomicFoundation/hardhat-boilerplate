@@ -32,7 +32,6 @@ describe("Token contract", function () {
     // mined.
     const hardhatToken = await Token.deploy();
 
-    // We can interact with the contract by calling `hardhatToken.method()`
     await hardhatToken.deployed();
 
     // Fixtures can return anything you consider useful for your tests
