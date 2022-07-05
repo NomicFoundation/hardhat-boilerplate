@@ -29,7 +29,7 @@ You can use the `Dapp` component as a starting point for your project. It has
 comments explaining each part of its code, and indicating what's specific to
 this project, and what can be reused.
 
-## Getting help and news about Hardhat
+## Getting help and news
 
 If you need help with this project or with Hardhat in general, please read [this guide](https://hardhat.org/hardhat-runner/docs/guides/getting-help) to learn where and how to get it.
 
