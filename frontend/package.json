@@ -6,9 +6,12 @@
     "bootstrap": "^4.4.1",
     "ethers": "^5.4.7",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "typescript": "^4.7.4"
   },
   "devDependencies": {
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
     "react-scripts": "5.0.1"
   },
   "scripts": {

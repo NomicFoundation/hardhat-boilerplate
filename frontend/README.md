@@ -21,7 +21,7 @@ This Dapp consists of multiple React Components, which you can find in
 
 Most of them are presentational components, have no logic, and just render HTML.
 
-The core functionality is implemented in `src/components/Dapp.js`, which has
+The core functionality is implemented in `src/components/Dapp.ts`, which has
 examples of how to connect to the user's wallet, initialize your Ethereum
 connection and contracts, read from the contract's state, and send transactions.
 

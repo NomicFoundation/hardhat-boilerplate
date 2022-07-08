@@ -1,15 +1,18 @@
-// This is an example test file. Hardhat will run every *.js file in `test/`,
+// Import the ethers library to interact with the smart contract
+import { ethers } from "hardhat";
+
+// This is an example test file. Hardhat will run every *.ts file in `test/`,
 // so feel free to add new ones.
 
 // Hardhat tests are normally written with Mocha and Chai.
 
 // We import Chai to use its asserting functions here.
-const { expect } = require("chai");
+import { expect } from "chai";
 
 // We use `loadFixture` to share common setups (or fixtures) between tests.
 // Using this simplifies your tests and makes them run faster, by taking
 // advantage or Hardhat Network's snapshot functionality.
-const { loadFixture } = require("@nomicfoundation/hardhat-network-helpers");
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 // `describe` is a Mocha function that allows you to organize your tests.
 // Having your tests organized makes debugging them easier. All Mocha

@@ -27,6 +27,25 @@ const HARDHAT_NETWORK_ID = '1337';
 // This is an error code that indicates that the user canceled a transaction
 const ERROR_CODE_TX_REJECTED_BY_USER = 4001;
 
+// Defining the Dapp components state and props for type safety.
+interface TokenData {
+  name: string;
+  symbol: string;
+}
+
+interface IState {
+  tokenData?: TokenData;
+  selectedAddress?: string;
+  balance?: ethers.BigNumber;
+  txBeingSent?: string;
+  transactionError?: Error;
+  networkError?: string;
+}
+
+// Since window.ethereum is not recognized by the TypeScript compiler, 
+// we use this little hack
+declare let window: any;
+
 // This component is in charge of doing these things:
 //   1. It connects to the user's wallet
 //   2. Initializes ethers and the Token contract
@@ -37,23 +56,28 @@ const ERROR_CODE_TX_REJECTED_BY_USER = 4001;
 // Note that (3) and (4) are specific of this sample application, but they show
 // you how to keep your Dapp and contract's state in sync,  and how to send a
 // transaction.
-export class Dapp extends React.Component {
+export class Dapp extends React.Component<{}, IState> {
+  // We store multiple things in Dapp's state.
+  // You don't need to follow this pattern, but it's an useful example.
+  initialState = {
+    // The info of the token (i.e. It's Name and symbol)
+    tokenData: undefined,
+    // The user's address and balance
+    selectedAddress: undefined,
+    balance: undefined,
+    // The ID about transactions being sent, and any possible error with them
+    txBeingSent: undefined,
+    transactionError: undefined,
+    networkError: undefined,
+  };
+  private _provider: ethers.providers.Web3Provider;
+  private _pollDataInterval: NodeJS.
+    // We'll use ethers to interact with the Ethereum network and our contract
+    Timer;
+  private _token: any;
+
   constructor(props) {
     super(props);
-
-    // We store multiple things in Dapp's state.
-    // You don't need to follow this pattern, but it's an useful example.
-    this.initialState = {
-      // The info of the token (i.e. It's Name and symbol)
-      tokenData: undefined,
-      // The user's address and balance
-      selectedAddress: undefined,
-      balance: undefined,
-      // The ID about transactions being sent, and any possible error with them
-      txBeingSent: undefined,
-      transactionError: undefined,
-      networkError: undefined,
-    };
 
     this.state = this.initialState;
   }
