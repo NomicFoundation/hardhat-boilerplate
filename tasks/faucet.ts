@@ -1,12 +1,13 @@
-const fs = require("fs");
+import fs from "fs";
+import { task } from "hardhat/config";
 
 // This file is only here to make interacting with the Dapp easier,
 // feel free to ignore it if you don't need it.
 
 task("faucet", "Sends ETH and tokens to an address")
   .addPositionalParam("receiver", "The address that will receive them")
-  .setAction(async ({ receiver }, { ethers }) => {
-    if (network.name === "hardhat") {
+  .setAction(async ({ receiver }, { ethers, config }) => {
+    if (config.defaultNetwork === "hardhat") {
       console.warn(
         "You are running the faucet task with Hardhat network, which" +
           "gets automatically created and destroyed every time. Use the Hardhat" +
@@ -22,7 +23,7 @@ task("faucet", "Sends ETH and tokens to an address")
       return;
     }
 
-    const addressJson = fs.readFileSync(addressesFile);
+    const addressJson = fs.readFileSync(addressesFile, { encoding: "utf8" });
     const address = JSON.parse(addressJson);
 
     if ((await ethers.provider.getCode(address.Token)) === "0x") {
