@@ -1,7 +1,14 @@
 // This is a script for deploying your contracts. You can adapt it to deploy
 // yours, or create new ones.
 
-const path = require("path");
+import fs from "fs";
+import path from "path";
+
+const {
+  CONTRACTS_DIRECTORY,
+  CONTRACT_OUTPUT_FILENAME,
+  TOKEN_JSON_FILE,
+} = require("../constants");
 
 async function main() {
   // This is just a convenience check
@@ -33,22 +40,19 @@ async function main() {
 }
 
 function saveFrontendFiles(token) {
-  const fs = require("fs");
-  const contractsDir = path.join(__dirname, "..", "frontend", "src", "contracts");
-
-  if (!fs.existsSync(contractsDir)) {
-    fs.mkdirSync(contractsDir);
+  if (!fs.existsSync(CONTRACTS_DIRECTORY)) {
+    fs.mkdirSync(CONTRACTS_DIRECTORY);
   }
 
   fs.writeFileSync(
-    path.join(contractsDir, "contract-address.json"),
+    path.join(CONTRACTS_DIRECTORY, CONTRACT_OUTPUT_FILENAME),
     JSON.stringify({ Token: token.address }, undefined, 2)
   );
 
   const TokenArtifact = artifacts.readArtifactSync("Token");
 
   fs.writeFileSync(
-    path.join(contractsDir, "Token.json"),
+    path.join(CONTRACTS_DIRECTORY, TOKEN_JSON_FILE),
     JSON.stringify(TokenArtifact, null, 2)
   );
 }

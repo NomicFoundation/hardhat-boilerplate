@@ -1,4 +1,12 @@
-const fs = require("fs");
+import fs from "fs";
+import path from "path";
+
+const {
+  CONTRACTS_DIRECTORY,
+  CONTRACT_OUTPUT_FILENAME,
+} = require("../constants");
+
+const addressesFile = path.join(CONTRACTS_DIRECTORY, CONTRACT_OUTPUT_FILENAME);
 
 // This file is only here to make interacting with the Dapp easier,
 // feel free to ignore it if you don't need it.
@@ -13,9 +21,6 @@ task("faucet", "Sends ETH and tokens to an address")
           " option '--network localhost'"
       );
     }
-
-    const addressesFile =
-      __dirname + "/../frontend/src/contracts/contract-address.json";
 
     if (!fs.existsSync(addressesFile)) {
       console.error("You need to deploy your contract first");
