@@ -223,7 +223,7 @@ export class Dapp extends React.Component {
     this._startPollingData();
   }
 
-  async _initializeEthers() {
+  _initializeEthers() {
     // We first initialize ethers by creating a provider using window.ethereum
     this._provider = new ethers.providers.Web3Provider(window.ethereum);
 
