@@ -1,5 +1,3 @@
-import React from "react";
-
 export function NoTokensMessage({ selectedAddress }) {
   return (
     <>
