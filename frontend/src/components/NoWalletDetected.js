@@ -8,12 +8,16 @@ export function NoWalletDetected() {
           <p>
             No Ethereum wallet was detected. <br />
             Please install{" "}
+            <a href="http://metamask.io" target="_blank" rel="noopener noreferrer">
+              MetaMask
+            </a>
+            or{" "}
             <a
-              href="http://metamask.io"
+              href="https://chrome.google.com/webstore/detail/coinbase-wallet-extension/hnfanknocfeofbddgcijnmhnfnkdnaad"
               target="_blank"
               rel="noopener noreferrer"
             >
-              MetaMask
+              Coinbase Wallet
             </a>
             .
           </p>
