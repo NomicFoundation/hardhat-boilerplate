@@ -353,7 +353,7 @@ export class Dapp extends React.Component {
   }
 
   // This method checks if the selected network is Localhost:8545
-  async _checkNetwork() {
+  _checkNetwork() {
     if (window.ethereum.networkVersion !== HARDHAT_NETWORK_ID) {
       this._switchChain();
     }
