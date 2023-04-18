@@ -19,10 +19,8 @@ import { TransactionErrorMessage } from "./TransactionErrorMessage";
 import { WaitingForTransactionMessage } from "./WaitingForTransactionMessage";
 import { NoTokensMessage } from "./NoTokensMessage";
 
-// This is the Hardhat Network id that we set in our hardhat.config.js.
-// Here's a list of network ids https://docs.metamask.io/guide/ethereum-provider.html#properties
-// to use when deploying to other networks.
-const HARDHAT_NETWORK_ID = '1337';
+// This is the default id used by the Hardhat Network
+const HARDHAT_NETWORK_ID = '31337';
 
 // This is an error code that indicates that the user canceled a transaction
 const ERROR_CODE_TX_REJECTED_BY_USER = 4001;
@@ -60,7 +58,7 @@ export class Dapp extends React.Component {
 
   render() {
     // Ethereum wallets inject the window.ethereum object. If it hasn't been
-    // injected, we instruct the user to install MetaMask.
+    // injected, we instruct the user to install a wallet.
     if (window.ethereum === undefined) {
       return <NoWalletDetected />;
     }
@@ -178,9 +176,7 @@ export class Dapp extends React.Component {
     // Once we have the address, we can initialize the application.
 
     // First we check the network
-    if (!this._checkNetwork()) {
-      return;
-    }
+    this._checkNetwork();
 
     this._initialize(selectedAddress);
 
@@ -196,12 +192,6 @@ export class Dapp extends React.Component {
       }
       
       this._initialize(newAddress);
-    });
-    
-    // We reset the dapp state if the network is changed
-    window.ethereum.on("chainChanged", ([networkId]) => {
-      this._stopPollingData();
-      this._resetState();
     });
   }
 
@@ -354,16 +344,19 @@ export class Dapp extends React.Component {
     this.setState(this.initialState);
   }
 
-  // This method checks if Metamask selected network is Localhost:8545 
-  _checkNetwork() {
-    if (window.ethereum.networkVersion === HARDHAT_NETWORK_ID) {
-      return true;
-    }
-
-    this.setState({ 
-      networkError: 'Please connect Metamask to Localhost:8545'
+  async _switchChain() {
+    const chainIdHex = `0x${HARDHAT_NETWORK_ID.toString(16)}`
+    await window.ethereum.request({
+      method: "wallet_switchEthereumChain",
+      params: [{ chainId: chainIdHex }],
     });
+    await this._initialize(this.state.selectedAddress);
+  }
 
-    return false;
+  // This method checks if the selected network is Localhost:8545
+  _checkNetwork() {
+    if (window.ethereum.networkVersion !== HARDHAT_NETWORK_ID) {
+      this._switchChain();
+    }
   }
 }
