@@ -345,9 +345,10 @@ export class Dapp extends React.Component {
   }
 
   async _switchChain() {
+    const chainIdHex = `0x${HARDHAT_NETWORK_ID.toString(16)}`
     await window.ethereum.request({
       method: "wallet_switchEthereumChain",
-      params: [{ chainId: "0x7A69" }],
+      params: [{ chainId: chainIdHex }],
     });
     await this._initialize(this.state.selectedAddress);
   }
