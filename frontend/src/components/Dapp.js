@@ -176,9 +176,7 @@ export class Dapp extends React.Component {
     // Once we have the address, we can initialize the application.
 
     // First we check the network
-    if (!this._checkNetwork()) {
-      return;
-    }
+    this._checkNetwork();
 
     this._initialize(selectedAddress);
 
@@ -194,12 +192,6 @@ export class Dapp extends React.Component {
       }
       
       this._initialize(newAddress);
-    });
-    
-    // We reset the dapp state if the network is changed
-    window.ethereum.on("chainChanged", ([networkId]) => {
-      this._stopPollingData();
-      this._resetState();
     });
   }
 
@@ -352,16 +344,19 @@ export class Dapp extends React.Component {
     this.setState(this.initialState);
   }
 
-  // This method checks if the selected network is Localhost:8545 
-  _checkNetwork() {
-    if (window.ethereum.networkVersion === HARDHAT_NETWORK_ID) {
-      return true;
-    }
-
-    this.setState({ 
-      networkError: 'Please connect your wallet to Localhost:8545'
+  async _switchChain() {
+    const chainIdHex = `0x${HARDHAT_NETWORK_ID.toString(16)}`
+    await window.ethereum.request({
+      method: "wallet_switchEthereumChain",
+      params: [{ chainId: chainIdHex }],
     });
+    await this._initialize(this.state.selectedAddress);
+  }
 
-    return false;
+  // This method checks if the selected network is Localhost:8545
+  _checkNetwork() {
+    if (window.ethereum.networkVersion !== HARDHAT_NETWORK_ID) {
+      this._switchChain();
+    }
   }
 }
