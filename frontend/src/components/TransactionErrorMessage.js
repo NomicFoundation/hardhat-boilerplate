@@ -1,5 +1,3 @@
-import React from "react";
-
 export function TransactionErrorMessage({ message, dismiss }) {
   return (
     <div className="alert alert-danger" role="alert">
