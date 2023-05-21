@@ -68,7 +68,11 @@ This repository uses our recommended hardhat setup, by using our [`@nomicfoundat
 - Get metrics on the gas used by your contracts with the [hardhat-gas-reporter](https://github.com/cgewecke/hardhat-gas-reporter) plugin.
 - Measure your tests coverage with [solidity-coverage](https://github.com/sc-forks/solidity-coverage).
 
-This project also includes [a sample frontend/Dapp](./frontend), which uses [Create React App](https://github.com/facebook/create-react-app).
+This project also includes [a sample frontend/Dapp](./frontend), which uses [Create React App](https://github.com/facebook/create-react-app) and also if you prefer to use [Vite](https://vitejs.dev/), you can check out [vite-hardhat-boilerplate](https://github.com/NomicFoundation/hardhat-boilerplate/tree/vite-hardhat-boilerplate) branch as well.
+
+## Looking for Vite?
+
+If you prefer to use [Vite](https://vitejs.dev) instead of `create-react-app`, you can check out the [vite-hardhat-boilerplate](https://github.com/NomicFoundation/hardhat-boilerplate/tree/vite-hardhat-boilerplate) branch for more details!
 
 ## Troubleshooting
 
@@ -85,6 +89,6 @@ This project also includes [a sample frontend/Dapp](./frontend), which uses [Cre
 
 If you need help with this project, or with Hardhat in general, please read [this guide](https://hardhat.org/hardhat-runner/docs/guides/getting-help) to learn where and how to get it.
 
-For the latest news about Hardhat, [follow us on Twitter](https://twitter.com/HardhatHQ), and don't forget to star [our GitHub repository](https://github.com/NomicFoundation/hardhat)!
+For the latest news about Hardhat, [follow us on Twitter](https://twitter.com/HardhatHQ), and don't forget to star [our GitHub repository](https://github.com/NomicFoundation/hardhat-boilerplate/tree/vite-hardhat-boilerplate)!
 
 **Happy _building_!**
