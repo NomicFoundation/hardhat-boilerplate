@@ -1,15 +1,21 @@
-// This is an example test file. Hardhat will run every *.js file in `test/`,
+// This is an example test file. Hardhat will run every *.js and *.ts file in `test/`,
 // so feel free to add new ones.
 
 // Hardhat tests are normally written with Mocha and Chai.
 
 // We import Chai to use its asserting functions here.
-const { expect } = require("chai");
+import {expect} from "chai";
+
+import {ethers} from "hardhat";
 
 // We use `loadFixture` to share common setups (or fixtures) between tests.
 // Using this simplifies your tests and makes them run faster, by taking
 // advantage or Hardhat Network's snapshot functionality.
-const { loadFixture } = require("@nomicfoundation/hardhat-network-helpers");
+import {loadFixture} from "@nomicfoundation/hardhat-network-helpers";
+
+// Token typescript interface available only after typechain run.
+// In hardhat test typechain type command run automatically on hardhat test command.
+import {Token} from "../typechain-types";
 
 // `describe` is a Mocha function that allows you to organize your tests.
 // Having your tests organized makes debugging them easier. All Mocha
@@ -30,7 +36,7 @@ describe("Token contract", function () {
     // To deploy our contract, we just have to call Token.deploy() and await
     // for it to be deployed(), which happens onces its transaction has been
     // mined.
-    const hardhatToken = await Token.deploy();
+    const hardhatToken = await Token.deploy() as Token;
 
     await hardhatToken.deployed();
 

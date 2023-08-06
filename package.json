@@ -24,6 +24,7 @@
     "@nomiclabs/hardhat-ethers": "^2.2.1",
     "@nomiclabs/hardhat-etherscan": "^3.1.4",
     "chai": "^4.3.7",
+    "dotenv": "^16.3.1",
     "ethers": "^5.7.2",
     "hardhat": "^2.12.5",
     "hardhat-gas-reporter": "^1.0.9",

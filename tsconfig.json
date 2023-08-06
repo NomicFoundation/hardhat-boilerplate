@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "incremental": true,            /* Enable incremental compilation */
+    "target": "es2020",                /* Specify ECMAScript target version: */
+    "module": "commonjs",           /* 'none', 'commonjs', 'amd', 'system', etc */
+    "declaration": true,            /* Concatenate & emit output to single file.*/
+    "outDir": "frontend-clients-dist",/* Redirect output to the directory. */
+    "esModuleInterop": true,        /* Enables intero between CommonJS and ES */
+    "skipLibCheck": true,           /* Skip type checking of declaration files. */
+    "forceConsistentCasingInFileNames": true, /* Disallow inconsistently */
+    "resolveJsonModule": true
+  },
+  "include": [
+    "frontend-clients"
+  ]
+}
