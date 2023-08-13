@@ -1,5 +1,35 @@
 # Hardhat Boilerplate
 
+# Additional Feature
+- [x] support env
+- [x] support ts
+- [] deploy pkg
+- [] migrate to pnpm
+- [] npm package
+- frontend - support ts
+- [x] add ci tests
+
+# Frontend Integration
+TL;DR: 
+
+Suppose that the actual frontend needs to be used via NPM package (e.g. public registry.npmjs.org),
+and even with help of predefined special backend-for-frontend class (e.g. ContractClient class).
+
+But for some reasons, e.g. hackathons, it will be faster and simple to debug in-frontend injections of 
+the typechain types of the contracts in the same repo (Hardhat templated repo), e.g. [example frontend](frontend).
+
+Both variants of the usage will be discussed below.
+
+## Mono-repo 
+
+
+## Package Integration
+
+[comment]: <> (In [package README.md]&#40;packages/zkturk-contract-artifacts/README.md&#41; all info collected on how to work in a real )
+
+[comment]: <> (separate frontend repo with API logic created in this contract repo.)
+
+
 This repository contains a sample project that you can use as the starting point
 for your Ethereum project. It's also a great fit for learning the basics of
 smart contract development.
@@ -20,6 +50,9 @@ cd hardhat-boilerplate
 npm install
 ```
 
+In the repo demonstration Hardhat scripts and tasks preserved. 
+Below is ste-by-step flow about the iteratction with the features. 
+
 Once installed, let's run Hardhat's testing network:
 
 ```sh
@@ -30,7 +63,14 @@ Then, on a new terminal, go to the repository's root folder and run this to
 deploy your contract:
 
 ```sh
-npx hardhat run scripts/deploy.js --network localhost
+npx hardhat run scripts/deploy.ts --network localhost
+```
+
+To check that hardhat task, [faucet.ts](tasks/faucet.ts), will transfer 1 eth 
+to provided address from **already deployed** contract, run the next command:
+
+```sh
+ npx hardhat faucet 0x795a04d0F74e892c452bB45747dFFdcDA286FBE7 --network localhost
 ```
 
 Finally, we can run the frontend with:
