@@ -2,7 +2,7 @@ name: Solidity Contract CI
 
 on:
   pull_request:
-    branches-ignore: [ master ]
+    branches: [ master ]
   workflow_dispatch:
 
 jobs:
