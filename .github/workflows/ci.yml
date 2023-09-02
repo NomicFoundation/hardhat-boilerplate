@@ -2,7 +2,7 @@ name: Solidity Contract CI
 
 on:
   pull_request:
-    branches: [ master ]
+    branches: [ add-typescript-and-package ]
   workflow_dispatch:
 
 jobs:

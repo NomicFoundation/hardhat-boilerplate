@@ -2,7 +2,7 @@
 name: Release Package - Auto Increment (patch)
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "add-typescript-and-package" ]
 
 permissions:
   contents: write
