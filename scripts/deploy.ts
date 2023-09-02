@@ -41,15 +41,19 @@ function saveFrontendFiles(token) {
     fs.mkdirSync(contractsDir);
   }
 
+  const contractAddressFile = 'contract-address.json'
+  console.log("Write contract address to " + contractAddressFile + "...")
   fs.writeFileSync(
-    path.join(contractsDir, "contract-address.json"),
+    path.join(contractsDir, contractAddressFile),
     JSON.stringify({ Token: token.address }, undefined, 2)
   );
 
   const TokenArtifact = artifacts.readArtifactSync("Token");
 
+  const contractArtifactsFile = 'Token.json'
+  console.log("Write contract artifacts to " + contractArtifactsFile + "...")
   fs.writeFileSync(
-    path.join(contractsDir, "Token.json"),
+    path.join(contractsDir, contractArtifactsFile),
     JSON.stringify(TokenArtifact, null, 2)
   );
 }
