@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "A boilerplate repository to get you started with Hardhat and Ethereum development",
   "scripts": {
-    "test": "hardhat test",
-    "compile": "hardhat compile"
+    "test": "hardhat clean && hardhat typechain && hardhat test",
+    "compile": "hardhat compile",
+    "typechain": "hardhat typechain"
   },
   "repository": {
     "type": "git",
