@@ -4,6 +4,9 @@ on:
   push:
     branches: [ "add-typescript-and-package" ]
 
+env:
+  PACKAGE_DIR: packages/hardhat-boilerplate-with-typescripted-contracts-artifacts
+
 permissions:
   contents: write
 
@@ -55,19 +58,19 @@ jobs:
       # Bump package version
       # Use tag latest
       - name: Prepare release version
-        working-directory: packages/zkturk-contract-artifacts
+        working-directory: ${{ env.PACKAGE_DIR }}
         run: |
           echo "NEW_VERSION=$(npm --no-git-tag-version version patch)" >> $GITHUB_ENV
 
       - name: Commit package.json changes and create tag
-        working-directory: packages/zkturk-contract-artifacts
+        working-directory: ${{ env.PACKAGE_DIR }}
         run: |
           git add "package.json"
           git commit -m "chore: release ${{ env.NEW_VERSION }}"
           git tag ${{ env.NEW_VERSION }}
 
       - name: Compose & Publish version to npm
-        working-directory: packages/zkturk-contract-artifacts
+        working-directory: ${{ env.PACKAGE_DIR }}
         run: export NPM_PUBLISH_TOKEN=${{ secrets.NPM_PUBLISH_TOKEN }} && ./publish.sh
 
       - name: Push changes to repository
