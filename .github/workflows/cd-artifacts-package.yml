@@ -2,7 +2,7 @@
 name: Release Package - Auto Increment (patch)
 on:
   push:
-    branches: [ "add-typescript-and-package" ]
+    branches: [ "main" ]
 
 env:
   PACKAGE_DIR: packages/hardhat-boilerplate-with-typescripted-contracts-artifacts
