@@ -1,0 +1,19 @@
+{
+  "name": "hardhat-boilerplate-with-typescripted-contracts-artifacts",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alcibiadescleinias/hardhat-boilerplate-with-typescripted-contracts.git"
+  },
+  "main": "./dist/frontend-clients/index.ts",
+  "types": "./dist/typechain-types/index.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "npm:publish": "sh ./publish.sh"
+  },
+  "dependencies": {
+    "ethers": "^5.7.2"
+  }
+}

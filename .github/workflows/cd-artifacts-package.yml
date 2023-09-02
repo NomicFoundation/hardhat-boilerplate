@@ -1,0 +1,77 @@
+# Regards to https://superface.ai/blog/npm-publish-gh-actions-changelog
+name: Release Package - Auto Increment (patch)
+on:
+  push:
+    branches: [ "master" ]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout project repository
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # Setup Node.js environment
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          registry-url: https://registry.npmjs.org/
+          node-version: '16.14.2'
+
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install Hardhat
+        run: npm install hardhat -g
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Create contract artifacts and typechain types in the root.
+        run: npm run compile && npm run typechain
+
+      - name: Build javascript from typescript for package
+        run: npx tsc
+
+      - name: Git configuration
+        run: |
+          git config --global user.email "github-actions-bot@users.noreply.github.com"
+          git config --global user.name "GitHub Actions"
+
+      # Bump package version
+      # Use tag latest
+      - name: Prepare release version
+        working-directory: packages/zkturk-contract-artifacts
+        run: |
+          echo "NEW_VERSION=$(npm --no-git-tag-version version patch)" >> $GITHUB_ENV
+
+      - name: Commit package.json changes and create tag
+        working-directory: packages/zkturk-contract-artifacts
+        run: |
+          git add "package.json"
+          git commit -m "chore: release ${{ env.NEW_VERSION }}"
+          git tag ${{ env.NEW_VERSION }}
+
+      - name: Compose & Publish version to npm
+        working-directory: packages/zkturk-contract-artifacts
+        run: export NPM_PUBLISH_TOKEN=${{ secrets.NPM_PUBLISH_TOKEN }} && ./publish.sh
+
+      - name: Push changes to repository
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git push origin && git push --tags
