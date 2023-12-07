@@ -7,7 +7,7 @@ smart contract development.
 This project is intended to be used with the
 [Hardhat Beginners Tutorial](https://hardhat.org/tutorial), but you should be
 able to follow it by yourself by reading the README and exploring its
-`contracts`, `tests`, `scripts` and `frontend` directories.
+`contracts`, `tests`, `ignition`, `scripts` and `frontend` directories.
 
 ## Quick start
 
@@ -51,8 +51,9 @@ You can find detailed instructions on using this repository and many tips in [it
 
 - [Writing and compiling contracts](https://hardhat.org/tutorial/writing-and-compiling-contracts/)
 - [Setting up the environment](https://hardhat.org/tutorial/setting-up-the-environment/)
-- [Testing Contracts](https://hardhat.org/tutorial/testing-contracts/)
+- [Testing contracts](https://hardhat.org/tutorial/testing-contracts/)
 - [Setting up your wallet](https://hardhat.org/tutorial/boilerplate-project#how-to-use-it)
+- [Deploying your contracts](https://hardhat.org/ignition/docs/getting-started#quick-start)
 - [Hardhat's full documentation](https://hardhat.org/docs/)
 
 For a complete introduction to Hardhat, refer to [this guide](https://hardhat.org/getting-started/#overview).
@@ -61,7 +62,7 @@ For a complete introduction to Hardhat, refer to [this guide](https://hardhat.or
 
 This repository uses our recommended hardhat setup, by using our [`@nomicfoundation/hardhat-toolbox`](https://hardhat.org/hardhat-runner/plugins/nomicfoundation-hardhat-toolbox). When you use this plugin, you'll be able to:
 
-- Deploy and interact with your contracts using [ethers.js](https://docs.ethers.io/v5/) and the [`hardhat-ethers`](https://hardhat.org/hardhat-runner/plugins/nomiclabs-hardhat-ethers) plugin.
+- Deploy, verify, and interact with your contracts using [Hardhat Ignition](https://hardhat.org/ignition/docs/getting-started#quick-start).
 - Test your contracts with [Mocha](https://mochajs.org/), [Chai](https://chaijs.com/) and our own [Hardhat Chai Matchers](https://hardhat.org/hardhat-chai-matchers) plugin.
 - Interact with Hardhat Network with our [Hardhat Network Helpers](https://hardhat.org/hardhat-network-helpers).
 - Verify the source code of your contracts with the [hardhat-etherscan](https://hardhat.org/hardhat-runner/plugins/nomiclabs-hardhat-etherscan) plugin.
