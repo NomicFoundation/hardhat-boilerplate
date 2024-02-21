@@ -2,8 +2,7 @@
 // yours, or create new ones.
 
 const path = require('path')
-
-const TokenModule = require('../ignition/modules/TokenModule')
+const fs = require('fs')
 
 async function main() {
   // This is just a convenience check
@@ -11,7 +10,7 @@ async function main() {
     console.warn(
       'You are trying to deploy a contract to the Hardhat Network, which' +
         'gets automatically created and destroyed every time. Use the Hardhat' +
-        " option '--network localhost'"
+        ' option `--network localhost`\n'
     )
   }
 
@@ -22,17 +21,32 @@ async function main() {
     await deployer.getAddress()
   )
 
-  console.log('Account balance:', (await deployer.getBalance()).toString())
+  console.log(
+    'Account balance:',
+    (await deployer.provider.getBalance(deployer.address)).toString()
+  )
+
+  const modulePath = path.join(
+    __dirname,
+    '..',
+    'ignition',
+    'modules',
+    'Token.js'
+  )
 
   // ignition is available in the global scope
-  await ignition.deploy(TokenModule)
+  await hre.run(
+    { scope: 'ignition', task: 'deploy' },
+    {
+      modulePath,
+    }
+  )
 
   // We also save the contract's artifacts and address in the frontend directory
   saveFrontendFiles()
 }
 
 function saveFrontendFiles() {
-  const fs = require('fs')
   const contractsDir = path.join(
     __dirname,
     '..',

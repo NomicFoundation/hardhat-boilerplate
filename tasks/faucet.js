@@ -38,7 +38,7 @@ task("faucet", "Sends ETH and tokens to an address")
 
     const tx2 = await sender.sendTransaction({
       to: receiver,
-      value: ethers.constants.WeiPerEther,
+      value: ethers.WeiPerEther,
     });
     await tx2.wait();
 
