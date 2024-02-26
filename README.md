@@ -11,8 +11,7 @@ able to follow it by yourself by reading the README and exploring its
 
 ## Quick start
 
-The first things you need to do are cloning this repository and installing its
-dependencies:
+First clone this repository and install its dependencies:
 
 ```sh
 git clone https://github.com/NomicFoundation/hardhat-boilerplate.git
