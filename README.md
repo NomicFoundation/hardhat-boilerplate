@@ -61,7 +61,8 @@ For a complete introduction to Hardhat, refer to [this guide](https://hardhat.or
 
 This repository uses our recommended hardhat setup, by using our [`@nomicfoundation/hardhat-toolbox`](https://hardhat.org/hardhat-runner/plugins/nomicfoundation-hardhat-toolbox). When you use this plugin, you'll be able to:
 
-- Deploy, verify, and interact with your contracts using [Hardhat Ignition](https://hardhat.org/ignition/docs/getting-started#quick-start).
+- Deploy and verify your contracts using [Hardhat Ignition](https://hardhat.org/ignition/docs/getting-started#quick-start).
+- Interact with your contracts using [ethers.js](https://docs.ethers.io/v6/) and the [`hardhat-ethers`](https://hardhat.org/hardhat-runner/plugins/nomiclabs-hardhat-ethers) plugin.
 - Test your contracts with [Mocha](https://mochajs.org/), [Chai](https://chaijs.com/) and our own [Hardhat Chai Matchers](https://hardhat.org/hardhat-chai-matchers) plugin.
 - Interact with Hardhat Network with our [Hardhat Network Helpers](https://hardhat.org/hardhat-network-helpers).
 - Verify the source code of your contracts with the [hardhat-etherscan](https://hardhat.org/hardhat-runner/plugins/nomiclabs-hardhat-etherscan) plugin.
