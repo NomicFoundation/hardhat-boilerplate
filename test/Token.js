@@ -11,9 +11,6 @@ const { expect } = require("chai");
 // advantage or Hardhat Network's snapshot functionality.
 const { loadFixture } = require("@nomicfoundation/hardhat-network-helpers");
 
-// We import our Hardhat Ignition deployment module to use it in our tests
-const TokenModule = require("../ignition/modules/Token");
-
 // `describe` is a Mocha function that allows you to organize your tests.
 // Having your tests organized makes debugging them easier. All Mocha
 // functions are available in the global scope.
@@ -26,14 +23,19 @@ describe("Token contract", function () {
   // loadFixture to run this setup once, snapshot that state, and reset Hardhat
   // Network to that snapshot in every test.
   async function deployTokenFixture() {
+    // Get the ContractFactory and Signers here.
+    const Token = await ethers.getContractFactory("Token");
     const [owner, addr1, addr2] = await ethers.getSigners();
 
-    // To deploy our contract, we just have to call ignition.deploy with our
-    // imported Hardhat Ignition module.
-    const { token: hardhatToken } = await ignition.deploy(TokenModule);
+    // To deploy our contract, we just have to call Token.deploy() and await
+    // for it to be deployed(), which happens onces its transaction has been
+    // mined.
+    const hardhatToken = await Token.deploy();
+
+    await hardhatToken.waitForDeployment();
 
     // Fixtures can return anything you consider useful for your tests
-    return { hardhatToken, owner, addr1, addr2 };
+    return { Token, hardhatToken, owner, addr1, addr2 };
   }
 
   // You can nest describe calls to create subsections.
