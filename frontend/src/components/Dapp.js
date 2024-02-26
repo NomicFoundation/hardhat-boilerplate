@@ -72,8 +72,8 @@ export class Dapp extends React.Component {
     // clicks a button. This callback just calls the _connectWallet method.
     if (!this.state.selectedAddress) {
       return (
-        <ConnectWallet 
-          connectWallet={() => this._connectWallet()} 
+        <ConnectWallet
+          connectWallet={() => this._connectWallet()}
           networkError={this.state.networkError}
           dismiss={() => this._dismissNetworkError()}
         />
@@ -176,9 +176,9 @@ export class Dapp extends React.Component {
     // Once we have the address, we can initialize the application.
 
     // First we check the network
-    this._checkNetwork();
+    await this._checkNetwork();
 
-    this._initialize(selectedAddress);
+    await this._initialize(selectedAddress);
 
     // We reinitialize it whenever the user changes their account.
     window.ethereum.on("accountsChanged", ([newAddress]) => {
@@ -186,16 +186,16 @@ export class Dapp extends React.Component {
       // `accountsChanged` event can be triggered with an undefined newAddress.
       // This happens when the user removes the Dapp from the "Connected
       // list of sites allowed access to your addresses" (Metamask > Settings > Connections)
-      // To avoid errors, we reset the dapp state 
+      // To avoid errors, we reset the dapp state
       if (newAddress === undefined) {
         return this._resetState();
       }
-      
+
       this._initialize(newAddress);
     });
   }
 
-  _initialize(userAddress) {
+  async _initialize(userAddress) {
     // This method initializes the dapp
 
     // We first store the user's address in the component's state
@@ -255,8 +255,10 @@ export class Dapp extends React.Component {
   }
 
   async _updateBalance() {
-    const balance = await this._token.balanceOf(this.state.selectedAddress);
-    this.setState({ balance });
+    if (this.state.selectedAddress) {
+      const balance = await this._token.balanceOf(this.state.selectedAddress);
+      this.setState({ balance });
+    }
   }
 
   // This method sends an ethereum transaction to transfer tokens.
@@ -345,7 +347,7 @@ export class Dapp extends React.Component {
   }
 
   async _switchChain() {
-    const chainIdHex = `0x${HARDHAT_NETWORK_ID.toString(16)}`
+    const chainIdHex = `0x${HARDHAT_NETWORK_ID.toString(16)}`;
     await window.ethereum.request({
       method: "wallet_switchEthereumChain",
       params: [{ chainId: chainIdHex }],
@@ -354,9 +356,16 @@ export class Dapp extends React.Component {
   }
 
   // This method checks if the selected network is Localhost:8545
-  _checkNetwork() {
-    if (window.ethereum.networkVersion !== HARDHAT_NETWORK_ID) {
-      this._switchChain();
+  async _checkNetwork() {
+    // The method returns a 0x-prefixed hexadecimal number, so we convert it into a numerical string
+    const currentChainId = Number(
+      await window.ethereum.request({
+        method: "eth_chainId",
+      })
+    ).toString();
+
+    if (currentChainId !== HARDHAT_NETWORK_ID) {
+      await this._switchChain();
     }
   }
 }
