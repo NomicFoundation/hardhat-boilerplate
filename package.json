@@ -16,17 +16,7 @@
   },
   "homepage": "https://github.com/NomicFoundation/hardhat-boilerplate#readme",
   "devDependencies": {
-    "@ethersproject/abi": "^5.7.0",
-    "@ethersproject/providers": "^5.7.2",
-    "@nomicfoundation/hardhat-chai-matchers": "^2.0.6",
-    "@nomicfoundation/hardhat-network-helpers": "^1.0.7",
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
-    "@nomicfoundation/hardhat-ethers": "^3.0.0",
-    "@nomiclabs/hardhat-etherscan": "^3.1.4",
-    "chai": "^4.3.7",
-    "ethers": "^6.0.0",
-    "hardhat": "^2.21.0",
-    "hardhat-gas-reporter": "^1.0.9",
-    "solidity-coverage": "^0.8.2"
+    "hardhat": "^2.20.2"
   }
 }
