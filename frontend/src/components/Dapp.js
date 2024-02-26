@@ -176,9 +176,9 @@ export class Dapp extends React.Component {
     // Once we have the address, we can initialize the application.
 
     // First we check the network
-    this._checkNetwork();
+    await this._checkNetwork();
 
-    this._initialize(selectedAddress);
+    await this._initialize(selectedAddress);
 
     // We reinitialize it whenever the user changes their account.
     window.ethereum.on("accountsChanged", ([newAddress]) => {
@@ -195,7 +195,7 @@ export class Dapp extends React.Component {
     });
   }
 
-  _initialize(userAddress) {
+  async _initialize(userAddress) {
     // This method initializes the dapp
 
     // We first store the user's address in the component's state
@@ -356,9 +356,16 @@ export class Dapp extends React.Component {
   }
 
   // This method checks if the selected network is Localhost:8545
-  _checkNetwork() {
-    if (window.ethereum.networkVersion !== HARDHAT_NETWORK_ID) {
-      this._switchChain();
+  async _checkNetwork() {
+    // The method returns a 0x-prefixed hexadecimal number, so we convert it into a numerical string
+    const currentChainId = Number(
+      await window.ethereum.request({
+        method: "eth_chainId",
+      })
+    ).toString();
+
+    if (currentChainId !== HARDHAT_NETWORK_ID) {
+      await this._switchChain();
     }
   }
 }
